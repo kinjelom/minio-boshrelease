@@ -4,5 +4,5 @@ mc:
   sha: sha256:eb234d123d6df7be0d8b938d90fac29c009c9a5f4802a5f29b7c26c4ace4c1a8
 minio:
   size: 49168384
-  object_id: 55edea55-bcd6-4aff-4981-9e27c0871afa
-  sha: sha256:51904016351b8024772e2e3bc9a56dcde1bb1b55a9e54fb333de63790c49b177
+  object_id: 9b334c0c-b07c-4a37-5fa1-f76a4a326457
+  sha: sha256:5b4d7feb9a84002edda3eee85b7fc9ff84ac7e6f060dc21f1e582701f32d3d96
