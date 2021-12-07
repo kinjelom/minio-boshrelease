@@ -71,7 +71,7 @@ case $1 in
     echo $$ > $PIDFILE
 
     exec ${BINPATH}/minio server -C $CONFIG_DIR \
-         --address ':<%= p("port") %>' \
+         --address ':<%= p("port") %>'  --console-address ':<%= p("console_port") %>' \
          <% if link("minio-server").instances.length > 1 %><%= nodes.map{ |n| "\"#{n}\"" }.join(' ') %><% else %>${DATA_DIR}/<% end %> \
          >> ${LOG_DIR}/minio-server.stdout.log \
          2>> ${LOG_DIR}/minio-server.stderr.log

@@ -30,6 +30,7 @@ instance_groups:
         accesskey: ((minio_accesskey))
         secretkey: ((minio_secretkey))
       port: 9000
+      console_port: 9200
   networks:
   - name: default
   vm_type: default
