@@ -42,6 +42,21 @@ $ bosh deploy -d minio manifests/manifest-nas-example.yml \
     -v minio_secretkey=CHANGEME!
 ```
 
+### MinIO Console UI
+
+For deploying a minio with registered routing for Console UI use ops:
+
+``` shell
+$ bosh deploy -d minio manifests/manifest-[fs|dist|nas]-example.yml \
+    -v minio_deployment_name=minio \
+    -v minio_accesskey=admin \
+    -v minio_secretkey=CHANGEME! \
+    -o manifests/ops/register-console.yml \
+    -v minio_console_uri=my-minio.example.org
+```
+
+
+
 ### PCF Tiles
 * [MinIO Internal Blobstore for PCF](https://network.pivotal.io/products/minio-internal-blobstore/)
 

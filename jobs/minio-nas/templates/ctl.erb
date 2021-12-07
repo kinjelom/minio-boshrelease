@@ -51,7 +51,7 @@ case $1 in
     echo "NAS share mounted! Starting Minio." >> ${LOG_DIR}/minio-server.stdout.log
 
     echo $$ > $PIDFILE
-    exec ${BINPATH}/minio gateway -C $CONFIG_DIR --address ':<%= p("port") %>' nas $DATA_DIR \
+    exec ${BINPATH}/minio gateway -C $CONFIG_DIR --address ':<%= p("port") %>' --console-address ':<%= p("console_port") %>' nas $DATA_DIR \
          >> ${LOG_DIR}/minio-server.stdout.log \
          2>> ${LOG_DIR}/minio-server.stderr.log
     ;;
