@@ -61,8 +61,8 @@ then
 fi
 <% end %>
 
-export MINIO_ACCESS_KEY="<%= p("credential.accesskey") %>"
-export MINIO_SECRET_KEY="<%= p("credential.secretkey") %>"
+export MINIO_ROOT_USER="<%= p("credential.accesskey") %>"
+export MINIO_ROOT_PASSWORD="<%= p("credential.secretkey") %>"
 export MINIO_PCF_TILE_VERSION=<%= p("pcf_tile_version") %>
 
 case $1 in
