@@ -12,20 +12,6 @@
         routes:
           - name: minio_console
             port: 9001
-
-
-- type: replace
-  path: /instance_groups/name=minio/jobs/name=route_registrar?
-  value:
-    name: route_registrar
-    release: routing
-    consumes:
-      nats: {from: nats, deployment: cf}
-    properties:
-      route_registrar:
-        routes:
-          - name: minio_console
-            port: 9001
             registration_interval: 20s
             uris:
               - ((minio_console_uri))
