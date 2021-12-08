@@ -11,7 +11,7 @@
       route_registrar:
         routes:
           - name: minio_console
-            port: ((minio_console_port))
+            port: 9001
 
 
 - type: replace
