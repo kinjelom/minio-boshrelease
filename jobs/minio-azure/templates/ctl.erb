@@ -25,6 +25,8 @@ BINPATH=/var/vcap/packages/minio
 mkdir -p ${RUN_DIR} ${LOG_DIR} ${CONFIG_DIR} ${STORE_DIR}
 chown -R vcap:vcap $RUN_DIR $LOG_DIR $CONFIG_DIR ${STORE_DIR}
 
+<%= p("envs", "") -%>
+
 export MINIO_ROOT_USER="<%= p("credential.accesskey") %>"
 export MINIO_ROOT_PASSWORD="<%= p("credential.secretkey") %>"
 export MINIO_PCF_TILE_VERSION=<%= p("pcf_tile_version") %>
