@@ -29,6 +29,8 @@ fi
 mkdir -p ${RUN_DIR} ${LOG_DIR}
 chown -R vcap:vcap $RUN_DIR $LOG_DIR
 
+<%= p("envs", "") -%>
+
 export MINIO_ROOT_USER="<%= p("credential.accesskey") %>"
 export MINIO_ROOT_PASSWORD="<%= p("credential.secretkey") %>"
 export MINIO_PCF_TILE_VERSION=<%= p("pcf_tile_version") %>
