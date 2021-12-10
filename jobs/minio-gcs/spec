@@ -33,6 +33,9 @@ properties:
   port:
     description: "The port on which the Minio server should bind"
     default: 9000
+  console_port:
+    description: "The port on which the Minio Console UI should bind"
+    default: 9001
   pcf_tile_version:
     description: "PCF Tile version"
     default: ""
