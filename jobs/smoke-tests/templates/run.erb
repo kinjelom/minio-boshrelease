@@ -26,8 +26,8 @@
 
 MC="/var/vcap/packages/mc/mc --config-folder /var/vcap/jobs/smoke-tests/config"
 
-ACCESS_KEY="<%= link('minio').p('credential.accesskey') %>"
-SECRET_KEY="<%= link('minio').p('credential.secretkey') %>"
+MINIO_ROOT_USER="<%= link('minio').p('credential.accesskey') %>"
+MINIO_ROOT_PASSWORD="<%= link('minio').p('credential.secretkey') %>"
 PORT="<%= link('minio').p('port') %>"
 HOST="<%= link('minio').instances[0].address %>"
 PROTOCOL=<%= esc(link('minio').p('server_cert', nil) ? 'https' : 'http') %>
