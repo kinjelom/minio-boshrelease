@@ -4,28 +4,27 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/minio/minio/pkg/licverifier"
+	"github.com/minio/pkg/licverifier"
 )
 
-var pubkey = []byte(`-----BEGIN PUBLIC KEY-----
-MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAEaK31xujr6/rZ7ZfXZh3SlwovjC+X8wGq
-qkltaKyTLRENd4w3IRktYYCRgzpDLPn/nrf7snV/ERO5qcI7fkEES34IVEr+2Uff
-JkO2PfyyAYEO/5dBlPh1Undu9WQl6J7B
------END PUBLIC KEY-----`)
-
 func main() {
-	if len(os.Args) != 2 {
-		fmt.Println("USAGE: minio-license-verify <KEY>")
+	if len(os.Args) != 3 {
+		fmt.Println("USAGE: minio-license-verify <PUB-KEY-PATH> <LICENSE-KEY>")
 		os.Exit(1)
 	}
-	lic, err := licverifier.NewLicenseVerifier(pubkey)
+	pubKeyBytes, err := os.ReadFile(os.Args[1])
 	if err != nil {
-		fmt.Println("Invalid public key")
+		fmt.Printf("Can't read file '%s', error: %v\n", os.Args[1], err)
 		os.Exit(1)
 	}
-	_, err = lic.Verify(os.Args[1])
+	lic, err := licverifier.NewLicenseVerifier(pubKeyBytes)
 	if err != nil {
-		fmt.Println("Invalid license key")
+		fmt.Printf("Invalid public key, error: %v\n", err)
+		os.Exit(1)
+	}
+	_, err = lic.Verify(os.Args[2])
+	if err != nil {
+		fmt.Printf("Invalid license key, error: %v\n", err)
 		os.Exit(1)
 	}
 	os.Exit(0)

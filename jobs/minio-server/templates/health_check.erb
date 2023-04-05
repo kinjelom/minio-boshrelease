@@ -16,7 +16,7 @@
 #
 
 <% if_p('licensekey') do %>
-/var/vcap/packages/minio/minio-license-verify <%= p("licensekey") %>
+/var/vcap/packages/minio-license-verify/minio-license-verify y /var/vcap/jobs/minio-server/config/license-pub-key.pem <%= p("licensekey") %>
 if [ $? == 1 ];
 then
     exit 1
