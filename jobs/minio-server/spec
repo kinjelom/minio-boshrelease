@@ -4,14 +4,16 @@ templates:
   ctl.erb: bin/ctl
   pre-start.erb: bin/pre-start
   health_check.erb: bin/health_check
-  health_check.erb: bin/dns/healthy
+  # health_check.erb: bin/dns/healthy
   dns/aliases.json.erb: dns/aliases.json
   public.crt.erb: config/public.crt
   private.key.erb: config/private.key
   ca.crt.erb: config/ca.crt
+  license-pub-key.pem.erb: config/license-pub-key.pem
 
 packages:
 - minio
+- minio-license-verify
 
 consumes:
 - name: minio-server
@@ -32,6 +34,14 @@ provides:
   - port
 
 properties:
+  license-pub-key:
+    description: "ECDSA public key in PEM format"
+    default: |
+      -----BEGIN PUBLIC KEY-----
+      MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAEaK31xujr6/rZ7ZfXZh3SlwovjC+X8wGq
+      qkltaKyTLRENd4w3IRktYYCRgzpDLPn/nrf7snV/ERO5qcI7fkEES34IVEr+2Uff
+      JkO2PfyyAYEO/5dBlPh1Undu9WQl6J7B
+      -----END PUBLIC KEY-----
   licensekey:
     descrption: "License Key"
   credential.accesskey:
