@@ -1,5 +1,7 @@
 # MinIO BOSH Release
 
+This repository was recovered from my fork of the [MinIO Boshrelease](https://github.com/minio/minio-boshrelease) version `2021-12-09T06-19-41Z`.
+
 [BOSH](http://bosh.io/) allows users to easily version, package and deploy software in a reproducible manner. This repo provides BOSH release of [MinIO](https://github.com/minio/minio) Object Storage Server. You can use this release to deploy MinIO in standalone, single-node mode as well as in distributed mode on multiple nodes.
 
 ## Upload release
