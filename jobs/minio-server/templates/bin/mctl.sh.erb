@@ -1,0 +1,24 @@
+#!/bin/bash
+
+MC_HOME="/var/vcap/packages/mc"
+CONFIG_DIR="/var/vcap/jobs/minio-server/config"
+LOG_DIR=/var/vcap/sys/log/minio-server
+
+ACCESS_KEY_THIS_MINIO="<%= p('credential.root_user') %>"
+SECRET_KEY_THIS_MINIO="<%= p('credential.root_password') %>"
+export MC_HOST_THIS_MINIO="<%=
+  protocol = 'http'
+  if p('tls.enable', false)
+    protocol = 'https'
+  end
+  "#{protocol}://${ACCESS_KEY_THIS_MINIO}:${SECRET_KEY_THIS_MINIO}@127.0.0.1:#{p('port')}"
+%>"
+
+if [ "$#" -eq 0 ]; then
+    echo "No arguments provided. Usage: $0 [mc-parameters]"
+    echo "Example: $0 --insecure ls THIS_MINIO"
+    exit 1
+fi
+
+$MC_HOME/mc --insecure "$@"
+

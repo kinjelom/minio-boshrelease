@@ -1,0 +1,25 @@
+---
+- type: replace
+  path: /instance_groups/-
+  value:
+    name: bucket-seeding # To create default buckets after manifest-deploy
+    azs: [ z1 ]
+    instances: 1
+    lifecycle: errand
+    post_deploy: true
+    networks: [ { name: default } ]
+    vm_type: default
+    stemcell: default
+    jobs:
+      - name: mc
+        release: minio
+        templates:
+          - name: mc
+        consumes:
+          minio: { from: minio-link }
+        properties:
+          script: |
+            #!/bin/sh
+            $MC_HOME/mc mb THIS_MINIO/bucket1
+            $MC_HOME/mc mb THIS_MINIO/bucket2
+            $MC_HOME/mc mb THIS_MINIO/bucket3

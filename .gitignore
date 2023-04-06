@@ -4,6 +4,7 @@ config/final.yml
 releases/*.tgz
 releases/**/*.tgz
 dev_releases
+publish-release.sh
 .blobs
 blobs
 .dev_builds
@@ -17,3 +18,4 @@ blobs
 *~
 *#
 #*
+
