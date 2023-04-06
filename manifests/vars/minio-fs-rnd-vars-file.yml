@@ -1,5 +1,5 @@
 minio_console_uri: minio-console-rnd.example.org
-minio_api_uri: minio-rnd.example.org
+minio_api_uri: minio-api-rnd.example.org
 minio_accesskey: admin-rnd
 
 minio_version: 2023-03-24T21-41-23Z.final.latest
