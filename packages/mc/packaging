@@ -1,4 +1,6 @@
 set -e
 
-cp -a mc ${BOSH_INSTALL_TARGET}
+source blobs-versions.env
+
+cp -a mc-${MC_VERSION} ${BOSH_INSTALL_TARGET}/mc
 chmod +x ${BOSH_INSTALL_TARGET}/mc

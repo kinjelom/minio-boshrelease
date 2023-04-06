@@ -19,7 +19,7 @@ cat > /etc/cron.hourly/minio-license-check<<EOF
 #!/bin/bash
 
 <% if_p('licensekey') do %>
-/var/vcap/packages/minio-license-verify/minio-license-verify /var/vcap/jobs/minio-server/config/license-pub-key.pem <%= p("licensekey") %>
+/var/vcap/packages/minio-license-verify/bin/minio-license-verify /var/vcap/jobs/minio-server/config/license-pub-key.pem <%= p("licensekey") %>
 if [ \$? == 1 ];
 then
 killall -9 minio
