@@ -1,4 +1,6 @@
 set -e
 
-cp -a minio ${BOSH_INSTALL_TARGET}
+source blobs-versions.env
+
+cp -a minio-${MINIO_VERSION} ${BOSH_INSTALL_TARGET}/minio
 chmod +x ${BOSH_INSTALL_TARGET}/minio

@@ -1,15 +1,15 @@
 ---
-name: ((minio_deployment_name))
+name: ((deployment_name))
 
 releases:
 - name: minio
-  version: latest
+  version: ((minio_version))
 - name: capi
   version: latest
 
 stemcells:
 - alias: default
-  os: ubuntu-trusty
+  os: ubuntu-jammy
   version: latest
 
 variables:

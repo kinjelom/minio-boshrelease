@@ -1,0 +1,62 @@
+---
+- type: replace
+  path: /instance_groups/name=minio/jobs/name=route_registrar?
+  value:
+    name: route_registrar
+    release: routing
+    consumes:
+      nats: {from: nats, deployment: cf}
+    properties:
+      route_registrar:
+        routes:
+          - name: minio_api
+            port: 9000
+            registration_interval: 20s
+            uris:
+              - ((minio_api_uri))
+          - name: minio_console
+            port: 9001
+            registration_interval: 20s
+            uris:
+              - ((minio_console_uri))
+
+- type: replace
+  path: /instance_groups/name=minio/jobs/name=bosh-dns-aliases?
+  value:
+    name: bosh-dns-aliases
+    release: bosh-dns-aliases
+    properties:
+      aliases:
+        - domain: nats.service.cf.internal
+          targets:
+            - query: '*'
+              instance_group: nats
+              deployment: cf
+              network: default
+              domain: bosh
+
+- type: replace
+  path: /instance_groups/name=minio/jobs/name=bpm?
+  value:
+    name: bpm
+    release: bpm
+
+- type: replace
+  path: /releases/name=routing?
+  value:
+    name: routing
+    version: latest
+
+- type: replace
+  path: /releases/name=bosh-dns-aliases?
+  value:
+    name: bosh-dns-aliases
+    version: latest
+
+- type: replace
+  path: /releases/name=bpm?
+  value:
+    name: bpm
+    version: latest
+
+
