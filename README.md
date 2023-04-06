@@ -24,7 +24,7 @@ bosh upload-release https://bosh.io/d/github.com/minio/minio-boshrelease
 
 ``` shell
 $ bosh deploy -d minio manifests/manifest-fs-example.yml \
-    -v minio_deployment_name=minio \
+    -v deployment_name=minio \
     -v minio_accesskey=admin \
     -v minio_secretkey=CHANGEME!
 ```
@@ -35,33 +35,34 @@ For deploying a distributed version, set the number of desired instances in the 
 
 ``` shell
 $ bosh deploy -d minio manifests/manifest-dist-example.yml \
-    -v minio_deployment_name=minio \
+    -v deployment_name=minio \
     -v minio_accesskey=admin \
     -v minio_secretkey=CHANGEME!
 ```
 
 ### NAS MinIO deployment
 
-For deploying a minio backed by a NAS mounted directory.  In this example using NFS with the nfs_mounter job from the capi release.
+For deploying a minio backed by a NAS mounted directory.  In this example using NFS with the nfs_mounter job from the [CAPI Release](https://github.com/cloudfoundry/capi-release).
 
 ``` shell
 $ bosh deploy -d minio manifests/manifest-nas-example.yml \
-    -v minio_deployment_name=minio \
+    -v deployment_name=minio \
     -v minio_accesskey=admin \
     -v minio_secretkey=CHANGEME!
 ```
 
 ### MinIO Console UI
 
-For deploying a minio with registered routing for Console UI use ops:
+For deploying a minio with registered routing for API & Console UI use ops:
 
 ``` shell
 $ bosh deploy -d minio manifests/manifest-[fs|dist|nas]-example.yml \
-    -v minio_deployment_name=minio \
+    -v deployment_name=minio \
     -v minio_accesskey=admin \
     -v minio_secretkey=CHANGEME! \
-    -o manifests/ops/register-console.yml \
-    -v minio_console_uri=my-minio.example.org
+    -o manifests/ops/register-api-and-console.yml \
+    -v minio_api_uri=my-minio-api.example.org \
+    -v minio_console_uri=my-minio-console.example.org
 ```
 
 
