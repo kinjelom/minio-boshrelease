@@ -1,5 +1,6 @@
 config/dev.yml
 config/private.yml
+config/final.yml
 releases/*.tgz
 releases/**/*.tgz
 dev_releases
@@ -10,6 +11,8 @@ blobs
 .DS_Store
 .final_builds/jobs/**/*.tgz
 .final_builds/packages/**/*.tgz
+.downloads
+.temp
 *.swp
 *~
 *#
