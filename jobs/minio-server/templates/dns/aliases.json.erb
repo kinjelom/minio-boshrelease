@@ -1,7 +1,7 @@
 <%=
   aliases = {}
 
-  if_p('dns_alias') do |dns_alias|
+  if_p('dns.alias') do |dns_alias|
     aliases[dns_alias] = [ link('minio-server').address ]
     link('minio-server').instances.each do |node|
       aliases["#{node.id}.#{dns_alias}"] = [ node.address ]

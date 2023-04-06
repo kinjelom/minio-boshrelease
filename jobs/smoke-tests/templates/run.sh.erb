@@ -1,0 +1,68 @@
+#!/bin/bash
+
+MC_HOME="/var/vcap/packages/mc"
+CONFIG_DIR="/var/vcap/jobs/smoke-tests/config"
+ACCESS_KEY="<%= link('minio').p('credential.root_user') %>"
+SECRET_KEY="<%= link('minio').p('credential.root_password') %>"
+<%
+  port = link('minio').p('port')
+  instance0 = link('minio').instances[0]
+  server_url = "http://${ACCESS_KEY}:${SECRET_KEY}@#{instance0.address}:#{port}"
+  if p('tls.enable', false)
+    if_p('dns.alias') do |dns_alias|
+      server_url = "https://${ACCESS_KEY}:${SECRET_KEY}@#{instance0.id}.#{dns_alias}:#{port}"
+    end.else do
+      server_url = "https://${ACCESS_KEY}:${SECRET_KEY}@#{instance0.address}:#{port}"
+    end
+  end
+%>
+MC_HOST_THIS_MINIO="<%= server_url %>"
+MC="${MC_HOME}/mc --config-dir ${CONFIG_DIR}"
+
+# MakeBucket
+$MC mb THIS_MINIO/test
+if [ $? -ne 0 ]
+then
+exit $?
+fi
+
+# PUT Object
+$MC cp /etc/passwd THIS_MINIO/test
+if [ $? -ne 0 ]
+then
+exit $?
+fi
+
+# GET Object
+uploadedFile=`$MC cat THIS_MINIO/test/passwd`
+if [ $? -ne 0 ]
+then
+exit $?
+fi
+
+localFile=`cat /etc/passwd`
+if [ $? -ne 0 ]
+then
+exit $?
+fi
+
+if [ "$uploadedFile" != "$localFile" ]
+then
+exit 1
+fi
+
+# Remove Object
+$MC rm --force THIS_MINIO/test/passwd
+if [ $? -ne 0 ]
+then
+exit $?
+fi
+
+# Remove Bucket
+$MC rm --force THIS_MINIO/test
+if [ $? -ne 0 ]
+then
+exit $?
+fi
+
+exit 0

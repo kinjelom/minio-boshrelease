@@ -1,8 +1,8 @@
 ---
 name: minio
 
-dependencies: []
+dependencies: [ ]
 
 files:
-- blobs-versions.env
-- minio-*
+  - blobs-versions.env
+  - minio-*

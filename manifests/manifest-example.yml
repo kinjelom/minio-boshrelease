@@ -1,0 +1,56 @@
+---
+name: ((deployment_name))
+
+instance_groups:
+  - name: minio
+    instances: ((minio_instances))
+    networks: [ { name: default } ]
+    azs: [ z1 ]
+    vm_type: ((minio_vm_type))
+    persistent_disk_type: ((minio_disk_type))
+    stemcell: default
+    env: { persistent_disk_fs: xfs }
+    jobs:
+      - name: minio-server
+        release: minio
+        provides:
+          minio-server: { as: minio-link }
+        properties:
+          credential:
+            root_user: ((minio_root_user))
+            root_password: ((minio_root_password))
+          server_config:
+            # console
+            MINIO_BROWSER_REDIRECT_URL: "https://((minio_console_uri))"
+            # prometheus
+            MINIO_PROMETHEUS_AUTH_TYPE: "public"
+            MINIO_PROMETHEUS_URL: "http://q-s0.prometheus2.default.prometheus.bosh:9090"
+            MINIO_PROMETHEUS_JOB_ID: "((deployment_name))"
+            # storage-class https://min.io/docs/minio/linux/reference/minio-server/minio-server.html#storage-class
+            MINIO_STORAGE_CLASS_STANDARD: "((minio_storage_class_standard))"
+
+variables:
+  - name: minio_root_user
+    type: password
+    options:
+      length: 4
+  - name: minio_root_password
+    type: password
+    options:
+      length: 8
+
+releases:
+  - name: minio
+    version: ((minio_version))
+
+stemcells:
+  - alias: default
+    os: ubuntu-jammy
+    version: latest
+
+update:
+  canaries: 1
+  max_in_flight: 1
+  canary_watch_time: 10000-600000
+  update_watch_time: 10000-600000
+
