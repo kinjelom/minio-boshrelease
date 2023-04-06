@@ -7,6 +7,8 @@ Please check:
 - [unofficial releases based on this repository](https://github.com/kinjelom/minio-boshrelease/releases)
 - [example manifests](manifests)
 
+## Bosh
+
 [BOSH](http://bosh.io/) allows users to easily version, package and deploy software in a reproducible manner. This repo provides BOSH release of [MinIO](https://github.com/minio/minio) Object Storage Server. You can use this release to deploy MinIO in standalone, single-node mode as well as in distributed mode on multiple nodes.
 
 ## Upload release
