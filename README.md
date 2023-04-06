@@ -11,13 +11,6 @@ Please check:
 
 [BOSH](http://bosh.io/) allows users to easily version, package and deploy software in a reproducible manner. This repo provides BOSH release of [MinIO](https://github.com/minio/minio) Object Storage Server. You can use this release to deploy MinIO in standalone, single-node mode as well as in distributed mode on multiple nodes.
 
-## Upload release
-Upload MinIO release to the bosh director.
-
-```
-bosh upload-release https://bosh.io/d/github.com/minio/minio-boshrelease
-```
-
 ## Deploy
 
 ### Standalone Minio deployment
