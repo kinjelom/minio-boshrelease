@@ -1,6 +1,6 @@
 # MinIO BOSH Release
 
-This repository was recovered from my fork of the [MinIO Boshrelease](https://github.com/minio/minio-boshrelease) version `2022-02-17T23-22-26Z`.
+This repository was recovered from my fork of the [MinIO Boshrelease](https://github.com/minio/minio-boshrelease) version [`2022-02-17T23-22-26Z`](https://github.com/kinjelom/minio-boshrelease/tree/2022-02-17T23-22-26Z).
 
 Please check:
 - [official releases](https://bosh.io/releases/github.com/minio/minio-boshrelease?all=1)
