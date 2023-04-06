@@ -9,5 +9,25 @@ mkdir -p $TMP_DIR
 bosh create-release --version=$REL_VERSION $REL_FLAGS --name=$REL_NAME  --tarball=$REL_TARBALL_PATH
 
 echo "Release created: ${REL_TARBALL_PATH}"
+
 SHA1=($(sha1sum $REL_TARBALL_PATH))
-echo "Release $REL_NAME/$REL_VERSION - $REL_TARBALL_PATH sha1: $SHA1 "
+TARBALL_URL="https://github.com/kinjelom/minio-boshrelease/releases/download/$MINIO_VERSION/$REL_TARBALL"
+
+set -
+
+echo "### BOSH Release: $REL_NAME"
+echo " "
+echo 'You can reference this release in your deployment manifest from the `releases` section:'
+echo '```yaml'
+echo "- name: \"$REL_NAME\""
+echo "  version: \"$REL_VERSION\""
+echo "  url: \"$TARBALL_URL\""
+echo "  sha1: \"$SHA1\""
+echo '```'
+echo 'Or upload it to your director with the `upload-release` command:'
+echo '```'
+echo "bosh upload-release --sha1 $SHA1 \ "
+echo "  $TARBALL_URL"
+echo '```'
+echo " "
+

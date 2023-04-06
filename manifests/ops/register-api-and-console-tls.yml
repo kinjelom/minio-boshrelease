@@ -1,20 +1,36 @@
 ---
-
 - type: replace
   path: /instance_groups/name=minio/jobs/name=route_registrar?
   value:
     name: route_registrar
     release: routing
     consumes:
-      nats: {from: nats, deployment: cf}
+      nats-tls: {from: nats-tls, deployment: cf}
     properties:
+      nats:
+        tls:
+          enabled: true
+          client_cert: ((/DIRECTOR_NAME/cf/nats_client_cert.certificate))
+          client_key: ((/DIRECTOR_NAME/cf/nats_client_cert.private_key))
       route_registrar:
         routes:
+          - name: minio_api
+            port: 9000
+            registration_interval: 20s
+            uris:
+              - ((minio_api_uri))
           - name: minio_console
             port: 9001
             registration_interval: 20s
             uris:
               - ((minio_console_uri))
+
+- type: replace
+  path: /releases/name=routing?
+  value:
+    name: routing
+    version: "latest"
+
 
 - type: replace
   path: /instance_groups/name=minio/jobs/name=bosh-dns-aliases?
@@ -32,36 +48,20 @@
               domain: bosh
 
 - type: replace
+  path: /releases/name=bosh-dns-aliases?
+  value:
+    name: bosh-dns-aliases
+    version: "latest"
+
+
+- type: replace
   path: /instance_groups/name=minio/jobs/name=bpm?
   value:
     name: bpm
     release: bpm
 
 - type: replace
-  path: /releases/name=routing?
-  value:
-    name: routing
-    version: "latest"
-    # version: "0.226.0"
-    # url: "https://bosh.io/d/github.com/cloudfoundry/routing-release?v=0.226.0"
-    # sha1: "ee17b730f61d27f5e1636f689e64ef17419e16ac"
-
-- type: replace
-  path: /releases/name=bosh-dns-aliases?
-  value:
-    name: bosh-dns-aliases
-    version: "latest"
-    # version: "0.0.4"
-    # url: "https://bosh.io/d/github.com/cloudfoundry/bosh-dns-aliases-release?v=0.0.4"
-    # sha1: "55b3dced813ff9ed92a05cda02156e4b5604b273"
-
-- type: replace
   path: /releases/name=bpm?
   value:
     name: bpm
     version: "latest"
-    # version: "1.1.15"
-    # url: "https://bosh.io/d/github.com/cloudfoundry/bpm-release?v=1.1.15"
-    # sha1: "0d48aa01a65b947b97570234eb2401e821a8bd35"
-
-
