@@ -2,14 +2,15 @@
 name: smoke-tests
 
 templates:
-  run.erb: bin/run
+  run.sh.erb: bin/run
   ca.crt.erb: config/certs/CAs/ca.crt
 
 consumes:
-- name: minio
-  type: server
+  - name: minio
+    type: server
 
 packages:
-- mc
+  - mc
 
-properties: {}
+properties: { }
+

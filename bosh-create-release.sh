@@ -2,15 +2,17 @@
 
 set -eux
 
+source ./src/blobs-versions.env
 source ./rel.env
 
-mkdir -p $TMP_DIR
+mkdir -p "$TMP_DIR"
 
-bosh create-release --version=$REL_VERSION $REL_FLAGS --name=$REL_NAME  --tarball=$REL_TARBALL_PATH
+# shellcheck disable=SC2086
+bosh create-release --version="$REL_VERSION" $REL_FLAGS --name="$REL_NAME" --tarball="$REL_TARBALL_PATH"
 
 echo "Release created: ${REL_TARBALL_PATH}"
 
-SHA1=($(sha1sum $REL_TARBALL_PATH))
+SHA1=($(sha1sum "$REL_TARBALL_PATH"))
 TARBALL_URL="https://github.com/kinjelom/minio-boshrelease/releases/download/$MINIO_VERSION/$REL_TARBALL"
 
 set -

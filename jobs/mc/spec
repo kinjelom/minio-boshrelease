@@ -2,33 +2,34 @@
 name: mc
 
 templates:
-  run.erb: bin/run
+  run.sh.erb: bin/run
   ca.crt.erb: config/certs/CAs/ca.crt
 
 consumes:
-- name: minio
-  type: server
+  - name: minio
+    type: server
 
 packages:
-- mc
+  - mc
 
 properties:
   script:
     description: |
       BASH script to run mc commands.
 
-      The pre-configured host configuration is called 'myminio'. For example,
-      if you need to create a bucket, you can write such code:
+      The pre-configured host configuration is called 'THIS_MINIO'. For example,
+      if you need to list buckets, you can write such code:
 
-          mc mb myminio/((bucket_name))
-
+        `$MC_HOME/mc ls THIS_MINIO`
+      
       Support for TLS-enabled minio server is provided with a pre-configured
-      config folder that is abailable at '/var/vcap/jobs/mc/config'. There is
-      located the custom Certificate Athority certs that the 'mc' should
+      config folder that is available at '$CONFIG_DIR'. There is
+      located the custom Certificate Authority certs that the 'mc' should
       trust. So, in a TLS-enabled server, the example bucket creation above
       becomes:
-
-          mc --config-folder /var/vcap/jobs/mc/config mb myminio/((bucket_name))
-
-      Note: we advise you to use the '--ignore-existing' flag to 'mc' when
-      writing bucket creation code as above.
+      
+        `$MC_HOME/mc --config-dir $CONFIG_DIR ls THIS_MINIO`
+      
+      or 
+      
+        `$MC_HOME/mc --insecure ls THIS_MINIO`

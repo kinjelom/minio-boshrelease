@@ -1,0 +1,79 @@
+#!/bin/bash
+
+JOB_DIR=/var/vcap/jobs/minio-server
+RUN_DIR=/var/vcap/sys/run/minio-server
+LOG_DIR=/var/vcap/sys/log/minio-server
+STORE_DIR=/var/vcap/store
+DATA_DIR=${STORE_DIR}/minio-server
+PIDFILE=${RUN_DIR}/pid
+BIN_PATH=/var/vcap/packages/minio
+
+mkdir -p ${RUN_DIR} ${LOG_DIR} ${DATA_DIR}
+chown -R vcap:vcap $RUN_DIR $LOG_DIR
+
+export MINIO_ROOT_USER="<%= p("credential.root_user") %>"
+export MINIO_ROOT_PASSWORD="<%= p("credential.root_password") %>"
+export MINIO_CONFIG_ENV_FILE="${JOB_DIR}/config/config.env"
+
+<%
+  # https://min.io/docs/minio/linux/operations/network-encryption.html#enabling-tls
+  protocol = 'http'
+  cert_param = ""
+  if p('tls.enable', false)
+    protocol = 'https'
+    cert_param = '--certs-dir ${JOB_DIR}/config/certs/'
+  end
+
+  drives_list = "${DATA_DIR}" # single node mode, one drive
+  if link('minio-server').instances.length > 1
+    # distributed mode, one drive
+    nodes = nil
+    if_p('dns.alias') do |dns_alias|
+      nodes = link('minio-server').instances.map { |instance| "#{protocol}://#{instance.id}.#{dns_alias}${DATA_DIR}" }
+    end.else do
+      nodes = link('minio-server').instances.map { |instance| "#{protocol}://#{instance.address}${DATA_DIR}" }
+    end
+    drives_list = nodes.map { |n| "\"#{n}\"" }.join(' ')
+  end
+%>
+
+### diagnostic info:
+# instances: <%= link('minio-server').instances.length %>
+##
+# instance.deployment: <%= spec.deployment %>
+# instance.release: <%= spec.release.name %>/<%= spec.release.version %>
+# instance.name: <%= spec.name %>
+# instance.id: <%= spec.id %>
+# instance.index: <%= spec.index %>
+# instance.bootstrap: <%= spec.bootstrap %>
+# instance.address: <%= spec.address %>
+# instance.ip: <%= spec.ip %>
+##
+# dns.alias: <%= p('dns.alias','not defined') %>
+# protocol: <%= protocol %>
+# cert_param: <%= cert_param %>
+# drives_list: <%= drives_list %>
+###
+
+case $1 in
+
+start)
+
+echo $$ > $PIDFILE
+exec ${BIN_PATH}/minio server --address ':<%= p("port") %>' --console-address ':<%= p("console_port") %>' \
+  <%= cert_param %> \
+  <%= drives_list %> \
+  --json 1>>${LOG_DIR}/minio-server.stdout.log  2>>${LOG_DIR}/minio-server.stderr.log
+
+;;
+
+stop)
+killall -9 minio
+rm -f $PIDFILE
+
+;;
+
+*)
+echo "Usage: ctl {start|stop}" ;;
+
+esac

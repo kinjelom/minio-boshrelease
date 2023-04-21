@@ -1,8 +1,9 @@
 ---
 name: mc
 
-dependencies: []
+dependencies: [ ]
 
 files:
-- blobs-versions.env
-- mc-*
+  - blobs-versions.env
+  - mc-*
+

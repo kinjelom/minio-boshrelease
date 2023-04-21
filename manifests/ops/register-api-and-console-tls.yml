@@ -5,7 +5,7 @@
     name: route_registrar
     release: routing
     consumes:
-      nats-tls: {from: nats-tls, deployment: cf}
+      nats-tls: { from: nats-tls, deployment: cf }
     properties:
       nats:
         tls:

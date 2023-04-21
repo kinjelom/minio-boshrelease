@@ -1,0 +1,22 @@
+#!/bin/bash
+
+<%
+  # https://min.io/docs/minio/linux/operations/network-encryption.html#enabling-tls
+  port = p('port')
+  server_url = "http://${ACCESS_KEY}:${SECRET_KEY}@localhost:#{port}"
+  if p('tls.enable', false)
+    if_p('dns.alias') do |dns_alias|
+      server_url = "https://${ACCESS_KEY}:${SECRET_KEY}@#{instance.id}.#{dns_alias}:#{port}"
+    end.else do
+      server_url = "https://${ACCESS_KEY}:${SECRET_KEY}@#{instance.address}:#{port}"
+    end
+  end
+%>
+LOG_DIR=/var/vcap/sys/log/minio-server
+CONFIG_DIR="/var/vcap/jobs/minio-server/config"
+ACCESS_KEY="<%= p('credential.root_user') %>"
+SECRET_KEY="<%= p('credential.root_password') %>"
+MC_HOST_this="<%=server_url %>"
+MC="/var/vcap/packages/mc/mc --config-dir ${CONFIG_DIR} "
+
+# $MC admin info this --json >>${LOG_DIR}/info.json 2>>${LOG_DIR}/mc-pre-start.stderr.log

@@ -1,18 +1,20 @@
-#!/bin/sh
+#!/bin/bash
+
+set -eux
 
 source ./src/blobs-versions.env
 source ./rel.env
 
-mkdir -p $TMP_DIR
+mkdir -p "$TMP_DIR"
 
-function down_add_blob {
+down_add_blob() {
   FILE=$1
   URL=$2
-  if [ ! -f blobs/${FILE} ];then
+  if [ ! -f "blobs/${FILE}" ];then
     echo "Downloads resource from the Internet ($URL -> $TMP_DIR/$FILE)"
-    curl -L $URL --output $TMP_DIR/$FILE
+    curl -L "$URL" --output "$TMP_DIR/$FILE"
     echo "Adds blob ($TMP_DIR/$FILE -> $FILE), starts tracking blob in config/blobs.yml for inclusion in packages"
-    bosh add-blob $TMP_DIR/$FILE $FILE
+    bosh add-blob "$TMP_DIR/$FILE" "$FILE"
   fi
 }
 
@@ -25,3 +27,4 @@ bosh sync-blobs
 
 echo "Upload previously added blobs that were not yet uploaded to the blobstore. Updates config/blobs.yml with returned blobstore IDs."
 bosh upload-blobs
+
