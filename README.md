@@ -170,10 +170,10 @@ overhead, file fragmentation, and cluster configuration.
 > [More info...](https://min.io/docs/minio/linux/operations/install-deploy-manage/migrate-fs-gateway.html)
 
 
-The latest BOSH release of the MinIO with the **Gateway** and the related **filesystem** mode is [RELEASE.2022-10-24T18-35-07Z](https://github.com/kinjelom/minio-boshrelease/releases/tag/2022-10-24T18-35-07Z)
+The latest BOSH release of the MinIO with the **Gateway** and the related **filesystem** mode is [RELEASE.2022-10-24T18-35-07Z](https://bosh.io/releases/github.com/minio/minio-boshrelease?version=2022-10-24T18-35-07Z)
 
 Other releases code:
-- This repository was recovered up to the [RELEASE.2022-02-17T23-22-26Z](https://github.com/kinjelom/minio-boshrelease/tree/2022-02-17T23-22-26Z)
+- This repository was recovered up to the `RELEASE.2022-02-17T23-22-26Z`
 - Changes up to the [RELEASE.2022-11-11T03-44-20Z are available here](https://github.com/kinjelom/minio-boshrelease/pull/1).
 
 
