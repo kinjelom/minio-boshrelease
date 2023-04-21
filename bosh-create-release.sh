@@ -13,7 +13,7 @@ bosh create-release --version="$REL_VERSION" $REL_FLAGS --name="$REL_NAME" --tar
 echo "Release created: ${REL_TARBALL_PATH}"
 
 SHA1=($(sha1sum "$REL_TARBALL_PATH"))
-TARBALL_URL="https://github.com/kinjelom/minio-boshrelease/releases/download/$MINIO_VERSION/$REL_TARBALL"
+TARBALL_URL="https://github.com/kinjelom/minio-boshrelease/releases/download/v$REL_VERSION/$REL_TARBALL"
 
 set -
 

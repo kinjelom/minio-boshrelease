@@ -31,13 +31,13 @@ You can reference this release in your deployment manifest from the `releases` s
 ```yaml
 - name: "minio"
   version: "2.2023-04-07T05-28-58Z_01.0"
-  url: "https://github.com/kinjelom/minio-boshrelease/releases/download/2023-04-07T05-28-58Z/minio-boshrelease-2.2023-04-07T05-28-58Z_01.0.tgz"
+  url: "https://github.com/kinjelom/minio-boshrelease/releases/download/v2.2023-04-07T05-28-58Z_01.0/minio-boshrelease-2.2023-04-07T05-28-58Z_01.0.tgz"
   sha1: "df379cba0f96b23028c38ae8ecbfae5abeca1a1b"
 ```
 Or upload it to your director with the `upload-release` command:
 ```
 bosh upload-release --sha1 df379cba0f96b23028c38ae8ecbfae5abeca1a1b \
-  https://github.com/kinjelom/minio-boshrelease/releases/download/2023-04-07T05-28-58Z/minio-boshrelease-2.2023-04-07T05-28-58Z_01.0.tgz
+  https://github.com/kinjelom/minio-boshrelease/releases/download/v2.2023-04-07T05-28-58Z_01.0/minio-boshrelease-2.2023-04-07T05-28-58Z_01.0.tgz
 ```
 
 
