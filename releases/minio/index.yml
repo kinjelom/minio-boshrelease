@@ -1,2 +1,4 @@
-builds: {}
+builds:
+  47294e91-0527-4ad4-4018-07aef2f238a3:
+    version: 2.0.0+minio.2023-04-07T05-28-58Z
 format-version: "2"
