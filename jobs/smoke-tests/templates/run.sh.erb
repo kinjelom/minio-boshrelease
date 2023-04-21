@@ -1,10 +1,14 @@
 #!/bin/bash
 
+set -eux
+
 MC_HOME="/var/vcap/packages/mc"
+JQ_HOME="/var/vcap/packages/jq"
 CONFIG_DIR="/var/vcap/jobs/smoke-tests/config"
 ACCESS_KEY="<%= link('minio').p('credential.root_user') %>"
 SECRET_KEY="<%= link('minio').p('credential.root_password') %>"
-<%
+# shellcheck disable=SC2034
+export MC_HOST_THIS_MINIO="<%=
   port = link('minio').p('port')
   instance0 = link('minio').instances[0]
   server_url = "http://${ACCESS_KEY}:${SECRET_KEY}@#{instance0.address}:#{port}"
@@ -15,54 +19,101 @@ SECRET_KEY="<%= link('minio').p('credential.root_password') %>"
       server_url = "https://${ACCESS_KEY}:${SECRET_KEY}@#{instance0.address}:#{port}"
     end
   end
-%>
-MC_HOST_THIS_MINIO="<%= server_url %>"
-MC="${MC_HOME}/mc --config-dir ${CONFIG_DIR}"
+  server_url
+%>"
+export MC="${MC_HOME}/mc --config-dir ${CONFIG_DIR}"
+export JQ="${JQ_HOME}/jq"
 
-# MakeBucket
-$MC mb THIS_MINIO/test
-if [ $? -ne 0 ]
-then
-exit $?
+## test properties
+export TEST_CREATE_BUCKET="<%= p('bucket_test.create_bucket') %>"
+export TEST_DELETE_BUCKET="<%= p('bucket_test.delete_bucket') %>"
+export TEST_OBJECT_SIZE_KB="<%= p('object_test.object_size_kb') %>"
+export TEST_NUMBER_OF_THREADS="<%= p('object_test.number_of_threads') %>"
+export TEST_NUMBER_OF_UPLOADS_IN_THREAD="<%= p('object_test.number_of_uploads_in_thread') %>"
+export TEST_CHECK_UPLOADED_OBJECTS="<%= p('object_test.check_uploaded_objects') %>"
+export TEST_DELETE_UPLOADED_OBJECTS="<%= p('object_test.delete_uploaded_objects') %>"
+
+generate_test_object() {
+    local tmp_dir=$(mktemp -d)
+    export test_object_name="test_binary_object_$(date +%Y%m%d_%H%M%S)_$RANDOM.bin"
+    export test_object_fs_path="${tmp_dir}/${test_object_name}"
+    dd if=/dev/urandom of="${test_object_fs_path}" bs=1K count="$TEST_OBJECT_SIZE_KB" > /dev/null 2>&1
+    export test_object_checksum=$(md5sum "$test_object_fs_path" | awk '{print $1}')
+}
+
+function test_object() {
+  local test_id=$1
+  local test_bucket_name=$2
+  local test_object_name=$3
+  local test_object_fs_path=$4
+  local test_object_checksum=$5
+  local TIMEFORMAT='%3R'
+
+  for i in $(seq 1 $TEST_NUMBER_OF_UPLOADS_IN_THREAD); do
+    local remote_obj_name="${test_object_name}_${test_id}_${i}"
+    local upload_time=$( {
+      time $MC cp -q --md5 "$test_object_fs_path" "THIS_MINIO/${test_bucket_name}/${remote_obj_name}" > /dev/null
+      ERROR_CODE=$?; handle_error
+    } 2>&1 )
+    echo "Test ${i}/${test_id} - PUT object time: ${upload_time} seconds"
+
+    if [ "$TEST_CHECK_UPLOADED_OBJECTS" == "true" ]; then
+      remote_checksum=`$MC stat "THIS_MINIO/${test_bucket_name}/${remote_obj_name}" --json | $JQ -r '.etag'`
+      ERROR_CODE=$?; handle_error
+      if [ "$test_object_checksum" != "$remote_checksum" ]; then
+        echo "The remote uploaded file sum=$remote_checksum is different that local generated one sum=$test_object_checksum" >&2
+        exit 1
+      fi
+    fi
+
+    if [ "$TEST_DELETE_UPLOADED_OBJECTS" == "true" ]; then
+      $MC rm -q --force "THIS_MINIO/${test_bucket_name}/${remote_obj_name}" > /dev/null
+      ERROR_CODE=$?; handle_error
+    fi
+
+  done
+}
+
+function handle_error() {
+ if [ "$ERROR_CODE" -ne 0 ]
+  then
+    echo "Error code: $ERROR_CODE" >&2
+    exit "$ERROR_CODE"
+  fi
+}
+
+test_bucket_name="test-bucket-$(date +%Y%m%d-%H%M%S)-$RANDOM"
+
+if [ "$TEST_CREATE_BUCKET" == "true" ]; then
+  echo "MakeBucket Test ${test_bucket_name}"
+  $MC mb "THIS_MINIO/${test_bucket_name}"
+  ERROR_CODE=$?; handle_error
+  $MC ilm import "THIS_MINIO/${test_bucket_name}" < $CONFIG_DIR/test-bucket-ilm.json
+  ERROR_CODE=$?; handle_error
+
+  generate_test_object
+
+  begin_time=$(date "+%Y-%m-%d %H:%M:%S")
+  echo "*** Begin objects tests $begin_time"
+
+  for i in $(seq 1 "$TEST_NUMBER_OF_THREADS"); do
+    test_object "$i" "$test_bucket_name" "$test_object_name" "$test_object_fs_path" "$test_object_checksum" &
+  done
+
+  wait
+  end_time=$(date "+%Y-%m-%d %H:%M:%S")
+  begin_ts=$(date -d "$begin_time" +%s)
+  end_ts=$(date -d "$end_time" +%s)
+  sec_test=$((end_ts - begin_ts))
+  echo "*** End objects tests, it took $sec_test seconds ($begin_time ... $end_time)"
+
+  if [ "$TEST_DELETE_BUCKET" == "true" ]; then
+    $MC rm --force "THIS_MINIO/${test_bucket_name}"
+    ERROR_CODE=$?; handle_error
+    echo "Test bucked ${test_bucket_name} has been removed"
+  fi
+
 fi
 
-# PUT Object
-$MC cp /etc/passwd THIS_MINIO/test
-if [ $? -ne 0 ]
-then
-exit $?
-fi
-
-# GET Object
-uploadedFile=`$MC cat THIS_MINIO/test/passwd`
-if [ $? -ne 0 ]
-then
-exit $?
-fi
-
-localFile=`cat /etc/passwd`
-if [ $? -ne 0 ]
-then
-exit $?
-fi
-
-if [ "$uploadedFile" != "$localFile" ]
-then
-exit 1
-fi
-
-# Remove Object
-$MC rm --force THIS_MINIO/test/passwd
-if [ $? -ne 0 ]
-then
-exit $?
-fi
-
-# Remove Bucket
-$MC rm --force THIS_MINIO/test
-if [ $? -ne 0 ]
-then
-exit $?
-fi
-
+echo "All tests done"
 exit 0
