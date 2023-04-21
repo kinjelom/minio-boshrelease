@@ -1,13 +1,13 @@
 ---
-name: ((minio_deployment_name))
+name: ((deployment_name))
 
 releases:
 - name: minio
-  version: latest
+  version: ((minio_version))
 
 stemcells:
 - alias: default
-  os: ubuntu-trusty
+  os: ubuntu-jammy
   version: latest
 
 variables:
@@ -31,12 +31,13 @@ instance_groups:
       credential:
         accesskey: ((minio_accesskey))
         secretkey: ((minio_secretkey))
-      port: 9000
-      console_port: 9200
+      envs: |
+        export MINIO_BROWSER_REDIRECT_URL="https://((minio_console_uri))"
+
   networks:
   - name: default
-  vm_type: default
-  persistent_disk_type: 2048
+  vm_type: ((minio_vm_type))
+  persistent_disk_type: ((minio_disk_type))
   stemcell: default
 
 - name: tests
@@ -54,7 +55,6 @@ instance_groups:
   networks:
   - name: default
   vm_type: default
-  persistent_disk_type: 2048
   env:
     persistent_disk_fs: xfs
   stemcell: default
@@ -81,12 +81,11 @@ instance_groups:
   networks:
   - name: default
   vm_type: default
-  persistent_disk_type: 2048
   stemcell: default
 
 update:
   canaries: 1
-  canary_watch_time: 1000-30000
-  update_watch_time: 1000-30000
   max_in_flight: 1
+  canary_watch_time: 10000-600000
+  update_watch_time: 10000-600000
 

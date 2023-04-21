@@ -1,15 +1,15 @@
 ---
-name: ((minio_deployment_name))
+name: ((deployment_name))
 
 releases:
 - name: minio
-  version: latest
+  version: ((minio_version))
 - name: capi
   version: latest
 
 stemcells:
 - alias: default
-  os: ubuntu-trusty
+  os: ubuntu-jammy
   version: latest
 
 variables:
@@ -47,7 +47,6 @@ instance_groups:
 
 update:
   canaries: 1
-  canary_watch_time: 1000-30000
-  update_watch_time: 1000-30000
   max_in_flight: 1
-
+  canary_watch_time: 10000-600000
+  update_watch_time: 10000-600000
