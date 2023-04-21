@@ -17,28 +17,15 @@ You can find all the new releases [here](https://github.com/kinjelom/minio-boshr
 
 Version numbers are created as a mix of [Semantic](https://semver.org/) and MinIO approaches, if an incompatibility is detected in the MinIO version, the major version number will be changed:
 
-`MAJOR`.`MinIO-Version`_`MINOR`.`PATCH`
+`MAJOR`.`MINOR`.`PATCH`+minio.`MinIO-Version`
 
 For this reason, the older versions are treated as `1.*.*` and the new ones as `2.*.*`.
+
+The latest release: https://github.com/kinjelom/minio-boshrelease/releases/latest 
 
 > **Note**
 > 
 > Older official releases can be found [here on the bosh.io website](https://bosh.io/releases/github.com/minio/minio-boshrelease?all=1).
-
-### Latest Release
-
-You can reference this release in your deployment manifest from the `releases` section:
-```yaml
-- name: "minio"
-  version: "2.2023-04-07T05-28-58Z_01.0"
-  url: "https://github.com/kinjelom/minio-boshrelease/releases/download/v2.2023-04-07T05-28-58Z_01.0/minio-boshrelease-2.2023-04-07T05-28-58Z_01.0.tgz"
-  sha1: "df379cba0f96b23028c38ae8ecbfae5abeca1a1b"
-```
-Or upload it to your director with the `upload-release` command:
-```
-bosh upload-release --sha1 df379cba0f96b23028c38ae8ecbfae5abeca1a1b \
-  https://github.com/kinjelom/minio-boshrelease/releases/download/v2.2023-04-07T05-28-58Z_01.0/minio-boshrelease-2.2023-04-07T05-28-58Z_01.0.tgz
-```
 
 
 ## Deployment

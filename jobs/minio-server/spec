@@ -2,7 +2,7 @@
 name: minio-server
 templates:
   bin/ctl.sh.erb: bin/ctl
-  bin/pre-start.sh.erb: bin/pre-start
+  bin/mctl.sh.erb: bin/mctl
   bin/health_check.sh.erb: bin/health_check
   config/config.env.erb: config/config.env
   config/certs/CAs/ca.crt.erb: config/certs/CAs/ca.crt
