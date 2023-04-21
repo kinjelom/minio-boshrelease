@@ -1,0 +1,66 @@
+---
+- type: replace
+  path: /instance_groups/-
+  value:
+    name: mirroring
+    azs: [ z1 ]
+    instances: 1
+    lifecycle: errand
+    networks: [ { name: default } ]
+    vm_type: default
+    stemcell: default
+    jobs:
+      - name: mc
+        release: minio
+        consumes:
+          minio: { from: minio-link }
+        properties:
+          script: |
+            set -eux
+            echo "Mirroring OTHER_MINIO -> THIS_MINIO"
+            # Please use readonly access to the OTHER_MINIO
+            export MC_HOST_OTHER_MINIO="((other_minio_scheme))://((other_minio_access_key)):((other_minio_secret_key))@((other_minio_uri))"
+            # Get a list of all buckets
+            echo "listing buckets on OTHER_MINIO"
+            buckets=$($MC_HOME/mc ls OTHER_MINIO --json | $JQ_HOME/jq -r '.key')
+            # Loop through each bucket
+            for bucket_ref in $buckets; do
+              bucket="${bucket_ref%?}"
+              echo "mirroring bucket OTHER_MINIO/${bucket}..."
+              $MC_HOME/mc mb --ignore-existing THIS_MINIO/$bucket
+              $MC_HOME/mc mirror --overwrite -md5 OTHER_MINIO/$bucket THIS_MINIO/$bucket &
+              # $MC_HOME/mc mirror --overwrite --watch -md5 OTHER_MINIO/$bucket THIS_MINIO/$bucket &
+              echo "mirroring bucket OTHER_MINIO/${bucket} done"
+            done
+            echo "Waiting for all background tasks to finish..."
+            wait
+            echo "finished."
+
+
+# `mc mirror` FLAGS:
+#  --overwrite                        overwrite object(s) on target if it differs from source
+#  --dry-run                          perform a fake mirror operation
+#  --watch, -w                        watch and synchronize changes
+#  --remove                           remove extraneous object(s) on target
+#  --region value                     specify region when creating new bucket(s) on target (default: "us-east-1")
+#  --preserve, -a                     preserve file(s)/object(s) attributes and bucket(s) policy/locking configuration(s) on target bucket(s)
+#  --md5                              force all upload(s) to calculate md5sum checksum
+#  --active-active                    enable active-active multi-site setup
+#  --disable-multipart                disable multipart upload feature
+#  --exclude value                    exclude object(s) that match specified object name pattern
+#  --older-than value                 filter object(s) older than value in duration string (e.g. 7d10h31s)
+#  --newer-than value                 filter object(s) newer than value in duration string (e.g. 7d10h31s)
+#  --storage-class value, --sc value  specify storage class for new object(s) on target
+#  --encrypt value                    encrypt/decrypt objects (using server-side encryption with server managed keys)
+#  --attr value                       add custom metadata for all objects
+#  --monitoring-address value         if specified, a new prometheus endpoint will be created to report mirroring activity. (eg: localhost:8081)
+#  --encrypt-key value                encrypt/decrypt objects (using server-side encryption with customer provided keys)
+#  --config-dir value, -C value       path to configuration folder (default: "/root/.mc")
+#  --quiet, -q                        disable progress bar display
+#  --no-color                         disable color theme
+#  --json                             enable JSON lines formatted output
+#  --debug                            enable debug output
+#  --insecure                         disable SSL certificate verification
+#  --limit-upload value               limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited)
+#  --limit-download value             limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited)
+#  --help, -h                         show help

@@ -1,0 +1,6 @@
+set -e
+
+source blobs-versions.env
+
+cp -a jq-${JQ_VERSION} ${BOSH_INSTALL_TARGET}/jq
+chmod +x ${BOSH_INSTALL_TARGET}/jq

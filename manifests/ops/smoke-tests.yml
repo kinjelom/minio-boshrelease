@@ -7,10 +7,17 @@
     instances: 1
     lifecycle: errand
     post_deploy: true
+    networks: [ { name: default } ]
+    vm_type: default
+    stemcell: default
     jobs:
       - name: smoke-tests
         release: minio
-        templates:
-          - name: smoke-tests
-        consumes:
-          minio: { from: minio-link }
+        properties:
+          bucket_test.create_bucket: true
+          bucket_test.delete_bucket: true
+          object_test.object_size_kb: 1024
+          object_test.number_of_threads: 4
+          object_test.number_of_uploads_in_thread: 100
+          object_test.check_uploaded_objects: true
+          object_test.delete_uploaded_objects: true

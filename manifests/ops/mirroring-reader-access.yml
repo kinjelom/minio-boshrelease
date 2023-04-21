@@ -1,0 +1,21 @@
+---
+- type: replace
+  path: /instance_groups/name=minio/jobs/name=minio-server/properties?/admin?/policies?/mirrorReader?
+  value: |
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": ["s3:ListBucket", "s3:GetBucketLocation", "s3:GetBucketPolicy", "s3:GetBucketPolicyStatus", "s3:GetObject"],
+          "Resource": ["arn:aws:s3:::*"]
+        }
+      ]
+    }
+
+- type: replace
+  path: /instance_groups/name=minio/jobs/name=minio-server/properties?/admin?/access?
+  value:
+    mirror_reader:
+      secret_key: ((minio_reader_secret))
+      policy_name: mirrorReader

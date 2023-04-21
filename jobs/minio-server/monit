@@ -1,5 +1,13 @@
 check process minio-server
   with pidfile /var/vcap/sys/run/minio-server/pid
-  start program "/var/vcap/jobs/minio-server/bin/ctl start"
+  start program "/var/vcap/jobs/minio-server/bin/ctl start with timeout <%= p('monit_startup_timeout_sec') %> seconds"
   stop program "/var/vcap/jobs/minio-server/bin/ctl stop"
   group vcap
+  if failed
+    host localhost
+    port <%=p('port') %>
+    protocol <%= p('tls.enable',true) ? 'HTTPS' : 'HTTP' %>
+    request "/minio/health/live"
+  then restart
+
+# monit 5.2.5 https://gist.github.com/oppegard/46dfa1e40b46aff1fa73c81b10341cab

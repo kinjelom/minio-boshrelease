@@ -1,12 +1,12 @@
 #!/bin/bash
 
-LOCAL_INSTANCE_URL=<%=
+LOCAL_INSTANCE_URL="<%=
   protocol = 'http'
   if p('tls.enable', false)
     protocol = 'https'
   end
   "#{protocol}://127.0.0.1:#{p('port')}/minio/health/live"
-%>
+%>"
 http_response=$(curl -s -k -o /dev/null -I -w "%{http_code}" $LOCAL_INSTANCE_URL)
 
 [ "$http_response" = "200" ]

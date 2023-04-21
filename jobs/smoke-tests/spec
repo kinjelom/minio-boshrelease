@@ -4,6 +4,7 @@ name: smoke-tests
 templates:
   run.sh.erb: bin/run
   ca.crt.erb: config/certs/CAs/ca.crt
+  test-bucket-ilm.json.erb: config/test-bucket-ilm.json
 
 consumes:
   - name: minio
@@ -11,6 +12,47 @@ consumes:
 
 packages:
   - mc
+  - jq
 
-properties: { }
+properties:
+  bucket_test.ilm:
+      description: Test bucket ILM
+      default: |
+        {
+          "Rules": [
+            {
+              "ID": "TestBucketTTL",
+              "Status": "Enabled",
+              "Expiration": {
+                "Date": "0001-01-01T00:00:00Z",
+                "Days": 1,
+                "DeleteMarker": false
+              },
+              "AbortIncompleteMultipartUpload": {
+                "DaysAfterInitiation": 0
+              }
+            }
+          ]
+        }
+  bucket_test.create_bucket:
+      description: Create test bucket
+      default: true
+  bucket_test.delete_bucket:
+      description: Delete the created test bucket
+      default: true
+  object_test.object_size_kb:
+      description: Test object size in kilobytes
+      default: 1024
+  object_test.number_of_threads:
+      description: Number of testing threads
+      default: 4
+  object_test.number_of_uploads_in_thread:
+      description: Number of uploads in one thread
+      default: 100
+  object_test.check_uploaded_objects:
+      description: Should the uploaded objects be checked?
+      default: true
+  object_test.delete_uploaded_objects:
+      description: Should the uploaded objects be deleted?
+      default: true
 

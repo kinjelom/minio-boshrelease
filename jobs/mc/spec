@@ -11,6 +11,7 @@ consumes:
 
 packages:
   - mc
+  - jq
 
 properties:
   script:

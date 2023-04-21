@@ -1,0 +1,12 @@
+#!/bin/bash
+
+function create_policies_files(){
+  local policies_dir=$1
+  mkdir -p "$policies_dir"
+  <% p('admin.policies', {}).each do |name, content| %>
+  ########## policy <%=name %>
+  cat > "${policies_dir}/<%=name %>.json" << EOF
+<%=content %>
+EOF
+  <% end %>
+}
