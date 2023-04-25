@@ -1,0 +1,47 @@
+name: minio
+version: 2.1.0+minio.2023-04-07T05-28-58Z
+commit_hash: "7264503"
+uncommitted_changes: true
+jobs:
+- name: mc
+  version: ff76179b15f068b7efc2f713d2e43eabfa93515567efd6d784d223d0efa8f92f
+  fingerprint: ff76179b15f068b7efc2f713d2e43eabfa93515567efd6d784d223d0efa8f92f
+  sha1: sha256:e008b38a724905b8ac4e987a96334473ba579cab7e250cdce6023e43e3c8b6e8
+  packages:
+  - mc
+  - jq
+- name: minio-server
+  version: 9122f240d4d3a46cb13acac801c841db846cd56cb3611824b83c8838a4b10602
+  fingerprint: 9122f240d4d3a46cb13acac801c841db846cd56cb3611824b83c8838a4b10602
+  sha1: sha256:0856ca24ccf7671675d775873ee155d1cde7bfb756984c6fffb07b2c5db065c1
+  packages:
+  - minio
+  - mc
+  - jq
+- name: smoke-tests
+  version: 6abb95a095825578c02d41442a8d0a118d58fffb2c1cb73d3f8294b1c40e9165
+  fingerprint: 6abb95a095825578c02d41442a8d0a118d58fffb2c1cb73d3f8294b1c40e9165
+  sha1: sha256:63d2676a2df00a6fa8751978e16961de579e5ba230f343b0808a93b339aff11d
+  packages:
+  - mc
+  - jq
+packages:
+- name: jq
+  version: e8e146580642c258de272b4a5055f3244d329fa22ce51f3732ba060d6dad378a
+  fingerprint: e8e146580642c258de272b4a5055f3244d329fa22ce51f3732ba060d6dad378a
+  sha1: sha256:201f91c565bfbf96d34fd7507f3ab219fa5cf494d6988b2c9a4ad79d06f18cfd
+  dependencies: []
+- name: mc
+  version: 5aa4fce188eb6af232cbec9af5f8307569029fd88f9fb5a13aa62d4f62031860
+  fingerprint: 5aa4fce188eb6af232cbec9af5f8307569029fd88f9fb5a13aa62d4f62031860
+  sha1: sha256:ea1248619638f1981628c09fc27d2cc022fdacaf708da359743eb8ff1583c32e
+  dependencies: []
+- name: minio
+  version: 5e8d4a5e6ee2590327f4754e174eb346bcc1e00b02bf8288625f6766120f5ea2
+  fingerprint: 5e8d4a5e6ee2590327f4754e174eb346bcc1e00b02bf8288625f6766120f5ea2
+  sha1: sha256:6280e9a7b5e5a36fe3dd7f741049fccb2504b172a611d0453c87518fffb22202
+  dependencies: []
+license:
+  version: e63fc8ed4afc4e74f5a8a7feba0a1b806655e5318413c4e0afa9f61c79b7abd6
+  fingerprint: e63fc8ed4afc4e74f5a8a7feba0a1b806655e5318413c4e0afa9f61c79b7abd6
+  sha1: sha256:0971c341d7b00377ab68be96cb6036395cef190c8b34e2e719cb7f817b5e9597
