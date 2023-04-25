@@ -1,4 +1,6 @@
 ---
+### it won't work for cluster creation, the cluster must be available for these operations
+
 - type: replace
   path: /instance_groups/name=minio/jobs/name=minio-server/properties?/admin?/policies?/mirrorReader?
   value: |

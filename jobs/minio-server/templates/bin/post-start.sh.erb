@@ -37,23 +37,25 @@ if [ "$instance_bootstrap" == "true" ]; then
     ["<%=access_key %>.policy_name"]="<%=value['policy_name'] %>"
   <% end %>)
 
-  existing_users=$($MC_HOME/mc admin user list THIS_MINIO)
+  if [ ${#users[@]} -ne 0 ]; then
+    existing_users=$($MC_HOME/mc admin user list THIS_MINIO)
 
-  for access_key in "${users[@]}"; do
-    secret_key="${access_map[${access_key}.secret_key]}"
-    policy_name="${access_map[${access_key}.policy_name]}"
+    for access_key in "${users[@]}"; do
+      secret_key="${access_map[${access_key}.secret_key]}"
+      policy_name="${access_map[${access_key}.policy_name]}"
 
-    if ! echo "${existing_users}" | grep -q "${access_key}"; then
-      # Create user
-      $MC_HOME/mc admin user add THIS_MINIO "${access_key}" "${secret_key}"
-      # Assign read-only policy to the newly created user
-      $MC_HOME/mc admin policy attach THIS_MINIO ${policy_name} --user "${access_key}"
-      echo "User '${access_key}' has been created, policy ${policy_name}."
-    else
-      echo "User '${access_key}' already exists."
-    fi
+      if ! echo "${existing_users}" | grep -q "${access_key}"; then
+        # Create user
+        $MC_HOME/mc admin user add THIS_MINIO "${access_key}" "${secret_key}"
+        # Assign read-only policy to the newly created user
+        $MC_HOME/mc admin policy attach THIS_MINIO ${policy_name} --user "${access_key}"
+        echo "User '${access_key}' has been created, policy ${policy_name}."
+      else
+        echo "User '${access_key}' already exists."
+      fi
 
-  done
+    done
+  fi
 else
     echo "omitting admin ops (non-bootstrap)..."
 fi
