@@ -28,8 +28,8 @@
               bucket="${bucket_ref%?}"
               echo "mirroring bucket OTHER_MINIO/${bucket}..."
               $MC_HOME/mc mb --ignore-existing THIS_MINIO/$bucket
-              $MC_HOME/mc mirror --overwrite -md5 OTHER_MINIO/$bucket THIS_MINIO/$bucket &
-              # $MC_HOME/mc mirror --overwrite --watch -md5 OTHER_MINIO/$bucket THIS_MINIO/$bucket &
+              $MC_HOME/mc mirror --overwrite --md5 OTHER_MINIO/$bucket THIS_MINIO/$bucket &
+              # $MC_HOME/mc mirror --overwrite --watch --md5 OTHER_MINIO/$bucket THIS_MINIO/$bucket &
               echo "mirroring bucket OTHER_MINIO/${bucket} done"
             done
             echo "Waiting for all background tasks to finish..."
