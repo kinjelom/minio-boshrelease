@@ -17,7 +17,6 @@ export MC_HOST_THIS_MINIO="<%=
   end
   "#{protocol}://${ACCESS_KEY_THIS_MINIO}:${SECRET_KEY_THIS_MINIO}@127.0.0.1:#{p('port')}"
 %>"
-instance_bootstrap="<%= spec.bootstrap %>"
 
 source /var/vcap/jobs/minio-server/bin/create-policies-files.sh
 
@@ -26,7 +25,9 @@ create_policies_files "${POLICIES_DIR}"
 
 policies=(<% p('admin.policies', {}).each_key do |policy_name| %> "<%=policy_name %>"<% end %> )
 
-if [ "$instance_bootstrap" == "true" ]; then
+instance_last="<%= spec.index>=link('minio-server').instances.length-1 %>"
+# run it only on the last instance to make sure it will run when the cluster is fully deployed
+if [ "$instance_last" == "true" ]; then
   echo "running admin ops (bootstrap)..."
   for policy_name in "${policies[@]}"; do
     $MC_HOME/mc admin policy create THIS_MINIO "${policy_name}" ${POLICIES_DIR}/${policy_name}.json
