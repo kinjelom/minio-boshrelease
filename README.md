@@ -1,7 +1,7 @@
 # MinIO BOSH Release
 
 This repository was recovered from my fork of the [MinIO Boshrelease](https://github.com/minio/minio-boshrelease) ([GNU AGPL V3](LICENSE))
-and then simplified and adapted to the latest MinIO releases with partial breaking of backward compatibility.
+and then simplified (also reduced in size by removing binaries from git history) and adapted to the latest MinIO releases with partial breaking of backward compatibility.
 
 [BOSH](http://bosh.io/) allows users to easily version, package and deploy software in a reproducible manner. This repo provides BOSH release of [MinIO](https://github.com/minio/minio) Object Storage Server. You can use this release to
 deploy MinIO in standalone, single-node mode as well as in distributed mode on multiple nodes.
@@ -177,15 +177,20 @@ Other releases code:
 - Changes up to the [RELEASE.2022-11-11T03-44-20Z are available here](https://github.com/kinjelom/minio-boshrelease/pull/1).
 
 
-## TODO (?)
+## TODO:
 
-1. `mc mirror` as an errand
-2. Data at-rest encryption manifest example 
-3. Multiple disks support
+- [ ] `mc mirror` as an errand, now you can use [this errand](manifests/ops/mirroring-to-this-minio-errand.yml)
+- [ ] Data at-rest encryption manifest example, now only [in-transit](manifests/ops/minio-enc.yml)
+- [ ] Migration errand, now you can use [this errand](manifests/ops/mirroring-to-this-minio-errand.yml)
+   - https://min.io/docs/minio/linux/operations/install-deploy-manage/expand-minio-deployment.html
+
+## To Consider:
+
+- [ ] Multiple disks support, does anyone need it?
    - https://www.starkandwayne.com/blog/bosh-multiple-disks/
    - https://github.com/BeckerMax/multidisk-bosh-release
-4. Loadbalancing
-  - https://min.io/docs/minio/linux/operations/install-deploy-manage/expand-minio-deployment.html#networking-and-firewalls
-5. Migration/expand/healing?
+- [ ] Loadbalancing, does anyone need it?
+   - https://min.io/docs/minio/linux/operations/install-deploy-manage/expand-minio-deployment.html#networking-and-firewalls
+- [ ] self-healing, does anyone need it?
+   - https://min.io/docs/minio/linux/reference/minio-mc-admin/mc-admin-heal.html
    - `mc admin heal CLUSTER/bucket --scan deep --recursive --rewrite`
-   - https://min.io/docs/minio/linux/operations/install-deploy-manage/expand-minio-deployment.html
