@@ -5,6 +5,7 @@ releases/*.tgz
 releases/**/*.tgz
 dev_releases
 publish-release.sh
+.finali_builds
 .blobs
 blobs
 .dev_builds
