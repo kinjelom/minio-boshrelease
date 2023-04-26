@@ -28,7 +28,7 @@ policies=(<% p('admin.policies', {}).each_key do |policy_name| %> "<%=policy_nam
 instance_last="<%= spec.index>=link('minio-server').instances.length-1 %>"
 # run it only on the last instance to make sure it will run when the cluster is fully deployed
 if [ "$instance_last" == "true" ]; then
-  echo "running admin ops (bootstrap)..."
+  echo "running admin ops (the last instance)..."
   for policy_name in "${policies[@]}"; do
     $MC_HOME/mc admin policy create THIS_MINIO "${policy_name}" ${POLICIES_DIR}/${policy_name}.json
   done
@@ -60,5 +60,5 @@ if [ "$instance_last" == "true" ]; then
     done
   fi
 else
-    echo "omitting admin ops (non-bootstrap)..."
+    echo "omitting admin ops (it runs only on the last instance to make sure it will run when the cluster is fully deployed)..."
 fi
