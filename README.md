@@ -100,6 +100,11 @@ instance_groups:
 
 ## Estimation of Deployment
 
+Read first:
+- https://min.io/product/reference-hardware
+- https://min.io/product/erasure-code-calculator
+- https://en.wikipedia.org/wiki/Erasure_code
+
 ### The Read and Write Speed
 
 The read and write speed in MinIO depends on multiple factors, such as the number of nodes, the value of
@@ -128,10 +133,6 @@ Since read and write speed depends on many factors, it is recommended to monitor
 under real conditions and adjust the configuration as needed to achieve optimal performance.
 
 ### Disk Space
-
-Read first:
-- https://en.wikipedia.org/wiki/Erasure_code
-- https://min.io/product/erasure-code-calculator
 
 To estimate the amount of space used in a MinIO cluster depending on the number of nodes and
 `MINIO_STORAGE_CLASS_STANDARD`, you can follow these steps:
