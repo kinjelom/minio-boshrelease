@@ -1,0 +1,47 @@
+name: minio
+version: 2.1.2+minio.2023-04-07T05-28-58Z
+commit_hash: 4866c15
+uncommitted_changes: true
+jobs:
+- name: mc
+  version: ff76179b15f068b7efc2f713d2e43eabfa93515567efd6d784d223d0efa8f92f
+  fingerprint: ff76179b15f068b7efc2f713d2e43eabfa93515567efd6d784d223d0efa8f92f
+  sha1: sha256:ef46a6217030bed82b8b30231cd891fe485458a7206723fa9c8a8ede98415a14
+  packages:
+  - mc
+  - jq
+- name: minio-server
+  version: 79030b56e0388b850e19793d71715aa8f842a566f98abba832f512ef6a38fcca
+  fingerprint: 79030b56e0388b850e19793d71715aa8f842a566f98abba832f512ef6a38fcca
+  sha1: sha256:e207028752091c76fe632d53979dd28bfa81996635e9fc295c800a7736b06f9c
+  packages:
+  - minio
+  - mc
+  - jq
+- name: smoke-tests
+  version: b85ae971e42af018bb4f87c91ea039e44bfacfddeb79a8e19be36d43a987b9bf
+  fingerprint: b85ae971e42af018bb4f87c91ea039e44bfacfddeb79a8e19be36d43a987b9bf
+  sha1: sha256:ce93515428f6a252e474616ac2ee3ab44801f1ab5607eba5615d30de58dec4fc
+  packages:
+  - mc
+  - jq
+packages:
+- name: jq
+  version: e8e146580642c258de272b4a5055f3244d329fa22ce51f3732ba060d6dad378a
+  fingerprint: e8e146580642c258de272b4a5055f3244d329fa22ce51f3732ba060d6dad378a
+  sha1: sha256:c2078252e475e7b42f79594186a63f11d2ce157010df6a58d8382efee0f03cba
+  dependencies: []
+- name: mc
+  version: 5aa4fce188eb6af232cbec9af5f8307569029fd88f9fb5a13aa62d4f62031860
+  fingerprint: 5aa4fce188eb6af232cbec9af5f8307569029fd88f9fb5a13aa62d4f62031860
+  sha1: sha256:320e2f8a63a39b512826f1539c7055e3c71364ffc86dc74984a20d18eb3f0881
+  dependencies: []
+- name: minio
+  version: 5e8d4a5e6ee2590327f4754e174eb346bcc1e00b02bf8288625f6766120f5ea2
+  fingerprint: 5e8d4a5e6ee2590327f4754e174eb346bcc1e00b02bf8288625f6766120f5ea2
+  sha1: sha256:693bdcfda23290a5aa61614a3a0c13a56dd68a77f3b398cbfbf2c1e82dbb5fa7
+  dependencies: []
+license:
+  version: e63fc8ed4afc4e74f5a8a7feba0a1b806655e5318413c4e0afa9f61c79b7abd6
+  fingerprint: e63fc8ed4afc4e74f5a8a7feba0a1b806655e5318413c4e0afa9f61c79b7abd6
+  sha1: sha256:0c933479ac8cc2dbd28a465e0271e3410149e9834697af0f912872a017cff3b9
