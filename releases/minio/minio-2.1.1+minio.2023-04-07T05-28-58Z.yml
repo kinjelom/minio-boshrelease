@@ -1,0 +1,47 @@
+name: minio
+version: 2.1.1+minio.2023-04-07T05-28-58Z
+commit_hash: 839fb43
+uncommitted_changes: true
+jobs:
+- name: mc
+  version: ff76179b15f068b7efc2f713d2e43eabfa93515567efd6d784d223d0efa8f92f
+  fingerprint: ff76179b15f068b7efc2f713d2e43eabfa93515567efd6d784d223d0efa8f92f
+  sha1: sha256:69456ded87656061561b29b21984bb301467fa0380c5a00d3ddfbff967ffb764
+  packages:
+  - mc
+  - jq
+- name: minio-server
+  version: 1a2b265e181b235a7a44cda3bc38855018b915bff95f8e8870df0849fce8f8d2
+  fingerprint: 1a2b265e181b235a7a44cda3bc38855018b915bff95f8e8870df0849fce8f8d2
+  sha1: sha256:525b6554e2b43eac6060a0f5076349021e9a5e80a0ba3c23a6eba69ca7e136b5
+  packages:
+  - minio
+  - mc
+  - jq
+- name: smoke-tests
+  version: b85ae971e42af018bb4f87c91ea039e44bfacfddeb79a8e19be36d43a987b9bf
+  fingerprint: b85ae971e42af018bb4f87c91ea039e44bfacfddeb79a8e19be36d43a987b9bf
+  sha1: sha256:047d4cd37252df3da56ebd2d9dca02e1469dee5e6cde619bfcf167bfa09f6b17
+  packages:
+  - mc
+  - jq
+packages:
+- name: jq
+  version: e8e146580642c258de272b4a5055f3244d329fa22ce51f3732ba060d6dad378a
+  fingerprint: e8e146580642c258de272b4a5055f3244d329fa22ce51f3732ba060d6dad378a
+  sha1: sha256:b349b20f02941001ea88ed6e796bef2914eb9837a409196323f1211e3263ff06
+  dependencies: []
+- name: mc
+  version: 5aa4fce188eb6af232cbec9af5f8307569029fd88f9fb5a13aa62d4f62031860
+  fingerprint: 5aa4fce188eb6af232cbec9af5f8307569029fd88f9fb5a13aa62d4f62031860
+  sha1: sha256:9dc975847e05196cfbb9c5642d4944cc490850dc0927da6fe0808c84d6d59a5d
+  dependencies: []
+- name: minio
+  version: 5e8d4a5e6ee2590327f4754e174eb346bcc1e00b02bf8288625f6766120f5ea2
+  fingerprint: 5e8d4a5e6ee2590327f4754e174eb346bcc1e00b02bf8288625f6766120f5ea2
+  sha1: sha256:88c76e09966fa44062766614b74d10bad571365ea09c4afbff5367dce73a109b
+  dependencies: []
+license:
+  version: e63fc8ed4afc4e74f5a8a7feba0a1b806655e5318413c4e0afa9f61c79b7abd6
+  fingerprint: e63fc8ed4afc4e74f5a8a7feba0a1b806655e5318413c4e0afa9f61c79b7abd6
+  sha1: sha256:2d4c6b0325a6880fd0084a39b45834619bf8caf54e52a949c5ae29ebe166ccb0
