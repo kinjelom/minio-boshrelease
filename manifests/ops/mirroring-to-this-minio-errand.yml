@@ -18,35 +18,41 @@
           script: |
             set -eu
             echo "Mirroring OTHER_MINIO -> THIS_MINIO"
-            # Please use readonly access to the OTHER_MINIO
+            # Please use root access to the OTHER_MINIO
             export MC_HOST_OTHER_MINIO="((other_minio_scheme))://((other_minio_access_key)):((other_minio_secret_key))@((other_minio_uri))"
             begin_time=$(date "+%Y-%m-%d %H:%M:%S")
-            # Get a list of all buckets
-            echo "listing buckets on OTHER_MINIO"
+            echo "migrate iam..."
+            $MC_HOME/mc admin cluster iam export OTHER_MINIO
+            $MC_HOME/mc admin cluster iam import THIS_MINIO OTHER_MINIO-iam-info.zip
+            echo "done."
+            echo "migrate buckets..."
             buckets=$($MC_HOME/mc ls OTHER_MINIO --json | $JQ_HOME/jq -r '.key')
-            echo "loop through each bucket to recreate"
             for bucket_ref in $buckets; do
               bucket="${bucket_ref%?}"
               echo "create bucket ${bucket}..."
               $MC_HOME/mc mb --ignore-existing THIS_MINIO/$bucket
-              echo "copy the bucket ${bucket} config..."
-              temp_config=$($MC_HOME/mc admin config export OTHER_MINIO/$bucket)
-              echo "$temp_config" | $MC_HOME/mc admin config import THIS_MINIO/$bucket
-              echo "restart service THIS_MINIO/${bucket}..."
-              $MC_HOME/mc admin service restart THIS_MINIO/$bucket
-              echo "bucket ${bucket} recreated"
+              echo "bucket ${bucket} created"
             done
+            echo "migrate buckets done."
+            config_temp_file=$(mktemp --tmpdir buckets-config.XXXXXX)
+            echo "copy all buckets config $config_temp_file..."
+            $MC_HOME/mc admin config export OTHER_MINIO > $config_temp_file
+            $MC_HOME/mc admin config import THIS_MINIO < $config_temp_file
+            echo "done."
             echo "copy all buckets metadata..."
-            # metadata_temp_file=$(mktemp --tmpdir ${bucket}.metadata.XXXXXX)
             $MC_HOME/mc admin cluster bucket export OTHER_MINIO
             $MC_HOME/mc admin cluster bucket import THIS_MINIO cluster-metadata.zip
+            echo "done."
+            echo "restart service THIS_MINIO..."
+            $MC_HOME/mc admin service restart THIS_MINIO
             echo "done."
             echo "loop through each bucket to mirror"
             for bucket_ref in $buckets; do
               bucket="${bucket_ref%?}"
               echo "mirroring bucket ${bucket}..."
-              $MC_HOME/mc mirror --overwrite --remove --md5 OTHER_MINIO/$bucket THIS_MINIO/$bucket
-              # $MC_HOME/mc mirror --overwrite --watch --md5 OTHER_MINIO/$bucket THIS_MINIO/$bucket &
+              $MC_HOME/mc mirror -q --overwrite --remove --preserve --md5 OTHER_MINIO/$bucket THIS_MINIO/$bucket
+              # $MC_HOME/mc mirror -q --overwrite --newer-than 1d --preserve --md5 OTHER_MINIO/$bucket THIS_MINIO/$bucket
+              # $MC_HOME/mc mirror -q --overwrite --watch --preserve --md5 OTHER_MINIO/$bucket THIS_MINIO/$bucket &
               echo "bucket ${bucket} mirrored"
             done
             echo "Waiting for all background tasks to finish..."
