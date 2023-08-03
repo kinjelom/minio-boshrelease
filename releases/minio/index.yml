@@ -3,6 +3,8 @@ builds:
     version: 2.0.0+minio.2023-04-07T05-28-58Z
   33b37220-3428-4732-532f-1b18f0fc8a6e:
     version: 2.1.2+minio.2023-04-07T05-28-58Z
+  48e49173-3f96-4bc0-78e2-12edcb3bea54:
+    version: 2.1.2+minio.2023-07-21T21-12-44Z
   530ab833-a5b3-4d9a-4f3a-6fe65a1c2221:
     version: 2.1.0+minio.2023-04-07T05-28-58Z
   559c8ea9-d39a-4b02-6e13-e7d572f62d15:

@@ -1,0 +1,47 @@
+name: minio
+version: 2.1.2+minio.2023-07-21T21-12-44Z
+commit_hash: 17e762d
+uncommitted_changes: true
+jobs:
+- name: mc
+  version: ff76179b15f068b7efc2f713d2e43eabfa93515567efd6d784d223d0efa8f92f
+  fingerprint: ff76179b15f068b7efc2f713d2e43eabfa93515567efd6d784d223d0efa8f92f
+  sha1: sha256:0f30856de5cc92ae908cceaea72d3ee0a3c652d69596bff269c8cfaa1e28a6ba
+  packages:
+  - mc
+  - jq
+- name: minio-server
+  version: 79030b56e0388b850e19793d71715aa8f842a566f98abba832f512ef6a38fcca
+  fingerprint: 79030b56e0388b850e19793d71715aa8f842a566f98abba832f512ef6a38fcca
+  sha1: sha256:fbb842f80c979d11de2bf953698c1ebeb7606f5d7b56dadc2140c3fed7846684
+  packages:
+  - minio
+  - mc
+  - jq
+- name: smoke-tests
+  version: b85ae971e42af018bb4f87c91ea039e44bfacfddeb79a8e19be36d43a987b9bf
+  fingerprint: b85ae971e42af018bb4f87c91ea039e44bfacfddeb79a8e19be36d43a987b9bf
+  sha1: sha256:7f57dfd4cf0ce0a41733cd9e35345a273d868b8ffb8adfd9dc0c65a11ce4902f
+  packages:
+  - mc
+  - jq
+packages:
+- name: jq
+  version: db2370f01eba21312359a5e146cf477807cfdccac41e41226d10dc801508ff4c
+  fingerprint: db2370f01eba21312359a5e146cf477807cfdccac41e41226d10dc801508ff4c
+  sha1: sha256:528f7db17fbc80f89ae1a3053268a2603b4fa1f90ecc5ad6d8b746fee7efe356
+  dependencies: []
+- name: mc
+  version: a6e8e742ca89938bf6865d35cf491a92c6c609bbf9f21f03efd7d9df33f0b038
+  fingerprint: a6e8e742ca89938bf6865d35cf491a92c6c609bbf9f21f03efd7d9df33f0b038
+  sha1: sha256:00c4c8731f7a2849e8e568a572e0145833c3c10be9acc102277ef41e14123d93
+  dependencies: []
+- name: minio
+  version: 6655be4abd9bcb1475b634b1cd6ce25b27bc057a309f456de206fa48aa61636f
+  fingerprint: 6655be4abd9bcb1475b634b1cd6ce25b27bc057a309f456de206fa48aa61636f
+  sha1: sha256:c516c15e9ef91a4e5357449c350fd3b588290e9e0eb37254dc6dbcb8e071c3a4
+  dependencies: []
+license:
+  version: e63fc8ed4afc4e74f5a8a7feba0a1b806655e5318413c4e0afa9f61c79b7abd6
+  fingerprint: e63fc8ed4afc4e74f5a8a7feba0a1b806655e5318413c4e0afa9f61c79b7abd6
+  sha1: sha256:2e2b78061a092c485c39714c889104807907d363f33fa289f610c46d5bfd2229
