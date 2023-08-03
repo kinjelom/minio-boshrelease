@@ -1,19 +1,19 @@
 name: minio
 version: 2.1.2+minio.2023-07-21T21-12-44Z
-commit_hash: 17e762d
+commit_hash: 43002db
 uncommitted_changes: true
 jobs:
 - name: mc
   version: ff76179b15f068b7efc2f713d2e43eabfa93515567efd6d784d223d0efa8f92f
   fingerprint: ff76179b15f068b7efc2f713d2e43eabfa93515567efd6d784d223d0efa8f92f
-  sha1: sha256:0f30856de5cc92ae908cceaea72d3ee0a3c652d69596bff269c8cfaa1e28a6ba
+  sha1: sha256:b08b54b2520192c142f1e6177e77f2b390889417e6d6e7bd8f48b81727788a59
   packages:
   - mc
   - jq
 - name: minio-server
   version: 79030b56e0388b850e19793d71715aa8f842a566f98abba832f512ef6a38fcca
   fingerprint: 79030b56e0388b850e19793d71715aa8f842a566f98abba832f512ef6a38fcca
-  sha1: sha256:fbb842f80c979d11de2bf953698c1ebeb7606f5d7b56dadc2140c3fed7846684
+  sha1: sha256:a2951ca56ace8c05d34e451317e45e477ba59f5b9147fb46cd24d97e8f92ed34
   packages:
   - minio
   - mc
@@ -21,7 +21,7 @@ jobs:
 - name: smoke-tests
   version: b85ae971e42af018bb4f87c91ea039e44bfacfddeb79a8e19be36d43a987b9bf
   fingerprint: b85ae971e42af018bb4f87c91ea039e44bfacfddeb79a8e19be36d43a987b9bf
-  sha1: sha256:7f57dfd4cf0ce0a41733cd9e35345a273d868b8ffb8adfd9dc0c65a11ce4902f
+  sha1: sha256:5a002ea7adc401121fca6f70ed1fd58a707d0c39cf5ea9ec50d23b95efe8b5d1
   packages:
   - mc
   - jq
@@ -29,19 +29,19 @@ packages:
 - name: jq
   version: db2370f01eba21312359a5e146cf477807cfdccac41e41226d10dc801508ff4c
   fingerprint: db2370f01eba21312359a5e146cf477807cfdccac41e41226d10dc801508ff4c
-  sha1: sha256:528f7db17fbc80f89ae1a3053268a2603b4fa1f90ecc5ad6d8b746fee7efe356
+  sha1: sha256:d6f0a1711a87115cf1b92b3b2d9e9b4e82f72feca2c7767f2c957128c0525bac
   dependencies: []
 - name: mc
-  version: a6e8e742ca89938bf6865d35cf491a92c6c609bbf9f21f03efd7d9df33f0b038
-  fingerprint: a6e8e742ca89938bf6865d35cf491a92c6c609bbf9f21f03efd7d9df33f0b038
-  sha1: sha256:00c4c8731f7a2849e8e568a572e0145833c3c10be9acc102277ef41e14123d93
+  version: 0d8a7931bd3d04ca4cadfc8393388d364eb78da5c1032f27eaae29237eceee19
+  fingerprint: 0d8a7931bd3d04ca4cadfc8393388d364eb78da5c1032f27eaae29237eceee19
+  sha1: sha256:f5034fc8e75b58f8fc257e300439ce4a3be16f885c70347808799f55860048b9
   dependencies: []
 - name: minio
-  version: 6655be4abd9bcb1475b634b1cd6ce25b27bc057a309f456de206fa48aa61636f
-  fingerprint: 6655be4abd9bcb1475b634b1cd6ce25b27bc057a309f456de206fa48aa61636f
-  sha1: sha256:c516c15e9ef91a4e5357449c350fd3b588290e9e0eb37254dc6dbcb8e071c3a4
+  version: cd99d413b61d2a68e3018f5a58c1e64b946f4bfed9eb748ff43269a812a3d8cd
+  fingerprint: cd99d413b61d2a68e3018f5a58c1e64b946f4bfed9eb748ff43269a812a3d8cd
+  sha1: sha256:386bb4313ac4d2cf251f66a650689207e66eb253d8f7f32af5a95392095c15d5
   dependencies: []
 license:
   version: e63fc8ed4afc4e74f5a8a7feba0a1b806655e5318413c4e0afa9f61c79b7abd6
   fingerprint: e63fc8ed4afc4e74f5a8a7feba0a1b806655e5318413c4e0afa9f61c79b7abd6
-  sha1: sha256:2e2b78061a092c485c39714c889104807907d363f33fa289f610c46d5bfd2229
+  sha1: sha256:73d893819bb47a1ef9c1e8580a700dc313e5ffe9993fc3a8ab034767d80806db
