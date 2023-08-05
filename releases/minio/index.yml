@@ -1,6 +1,8 @@
 builds:
   20deafba-e414-4695-709b-a53305c58f4b:
     version: 2.0.0+minio.2023-04-07T05-28-58Z
+  2f1b0d88-186e-429c-4037-4ea7daa3e8b4:
+    version: 2.1.2+minio.2023-08-04T17-40-21Z
   33b37220-3428-4732-532f-1b18f0fc8a6e:
     version: 2.1.2+minio.2023-04-07T05-28-58Z
   530ab833-a5b3-4d9a-4f3a-6fe65a1c2221:
