@@ -1,0 +1,47 @@
+name: minio
+version: 2.1.3+minio.2023-09-07T02-05-02Z
+commit_hash: 4233a58
+uncommitted_changes: true
+jobs:
+- name: mc
+  version: ff76179b15f068b7efc2f713d2e43eabfa93515567efd6d784d223d0efa8f92f
+  fingerprint: ff76179b15f068b7efc2f713d2e43eabfa93515567efd6d784d223d0efa8f92f
+  sha1: sha256:4eeca429cd4b6f27b36e23d450868b46d35fc24ff180a8755a36144907aa2218
+  packages:
+  - mc
+  - jq
+- name: minio-server
+  version: 79030b56e0388b850e19793d71715aa8f842a566f98abba832f512ef6a38fcca
+  fingerprint: 79030b56e0388b850e19793d71715aa8f842a566f98abba832f512ef6a38fcca
+  sha1: sha256:a408bb9ccc01adc898f9004d74d51913386eb87eb9793d4ae1fe323b707a33f4
+  packages:
+  - minio
+  - mc
+  - jq
+- name: smoke-tests
+  version: b85ae971e42af018bb4f87c91ea039e44bfacfddeb79a8e19be36d43a987b9bf
+  fingerprint: b85ae971e42af018bb4f87c91ea039e44bfacfddeb79a8e19be36d43a987b9bf
+  sha1: sha256:23a63dc5b65c28460ca86082b98a41a09d9c1df05e02f26a1d07cd69a4b0e9ce
+  packages:
+  - mc
+  - jq
+packages:
+- name: jq
+  version: b4fbdc6a9da43e23c2d4b3744917091ba63d45098523e9531f243a3259890553
+  fingerprint: b4fbdc6a9da43e23c2d4b3744917091ba63d45098523e9531f243a3259890553
+  sha1: sha256:c28a367f89756bad01bb6a5e5947d16e2e61c740b0fffebfc1d61944e3418e7c
+  dependencies: []
+- name: mc
+  version: 16b4caa4fb563cf3e8e43c3c1cd11b63a6acbc756157d2393f108773dd8731fc
+  fingerprint: 16b4caa4fb563cf3e8e43c3c1cd11b63a6acbc756157d2393f108773dd8731fc
+  sha1: sha256:a8ebf49a12759a1747467826b7e6e72e323a2969073cbc6a04b55176b0984dea
+  dependencies: []
+- name: minio
+  version: 39d7ba2016205e3c9c43d61a63fabcc63b4079648ce0a0f6d433a2ced7912b78
+  fingerprint: 39d7ba2016205e3c9c43d61a63fabcc63b4079648ce0a0f6d433a2ced7912b78
+  sha1: sha256:1b7c9d64790cca086fe33b6fa990e115d9369c6178edb092f5a7c52976c0561a
+  dependencies: []
+license:
+  version: e63fc8ed4afc4e74f5a8a7feba0a1b806655e5318413c4e0afa9f61c79b7abd6
+  fingerprint: e63fc8ed4afc4e74f5a8a7feba0a1b806655e5318413c4e0afa9f61c79b7abd6
+  sha1: sha256:2a1db22fcd1de52e67508de244a3f30d76ee1a0bb6d4b465a4807472e6f7ec3d
