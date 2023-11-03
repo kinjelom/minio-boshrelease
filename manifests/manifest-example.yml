@@ -28,16 +28,78 @@ instance_groups:
             MINIO_PROMETHEUS_JOB_ID: "((deployment_name))"
             # storage-class https://min.io/docs/minio/linux/reference/minio-server/minio-server.html#storage-class
             MINIO_STORAGE_CLASS_STANDARD: "((minio_storage_class_standard))"
+            # KMS
+            MINIO_KMS_KES_ENDPOINT: https://localhost:7373
+            MINIO_KMS_KES_CAPATH: /var/vcap/jobs/kes-server/config/certs/kes-server/kes-server-ca.crt
+            MINIO_KMS_KES_KEY_FILE: /var/vcap/jobs/kes-server/config/certs/kes-clients/client-admin.key
+            MINIO_KMS_KES_CERT_FILE: /var/vcap/jobs/kes-server/config/certs/kes-clients/client-admin.crt
+            MINIO_KMS_KES_KEY_NAME: ((deployment_name))-kms-default-key
+      - name: kes-server
+        release: minio
+        provides:
+          kes-server: { as: kes-link }
+        properties:
+          tls:
+            certs:
+              kes_clients_ca:
+                certificate: ((kes_clients_ca.certificate))
+              kes_client_admin:
+                certificate: ((kes_client_admin.certificate))
+                private_key: ((kes_client_admin.private_key))
+              kes_server:
+                ca: ((kes_server.ca))
+                certificate: ((kes_server.certificate))
+                private_key: ((kes_server.private_key))
+          keystore:
+            credhub:
+              base_url: ((credhub_base_url))
+              namespace: /((deployment_name))-kes
+              enable_mutual_tls: true
+              server_insecure_skip_verify: false
+              certs:
+                client:
+                  certificate: ((credhub_client.certificate))
+                  private_key: ((credhub_client.private_key))
+                server_ca:
+                  certificate: ((credhub_server_ca.certificate))
 
 variables:
-  - name: minio_root_user
-    type: password
-    options:
-      length: 4
-  - name: minio_root_password
-    type: password
-    options:
-      length: 8
+- name: minio_root_user
+  type: password
+  options:
+    length: 4
+- name: minio_root_password
+  type: password
+  options:
+    length: 8
+- name: kes_clients_ca
+  type: certificate
+  options:
+    common_name: "KES Clients CA"
+    is_ca: true
+    duration: 3650
+- name: kes_client_admin
+  type: certificate
+  options:
+    ca: kes_clients_ca
+    common_name: "KES Client Admin"
+    is_ca: false
+    duration: 3650
+- name: kes_server_ca
+  type: certificate
+  options:
+    common_name: "KES Server CA"
+    is_ca: true
+    duration: 3650
+- name: kes_server
+  type: certificate
+  options:
+    ca: kes_server_ca
+    common_name: "localhost"
+    alternative_names:
+    - "localhost"
+    - "127.0.0.1"
+    duration: 3650
 
 releases:
   - name: minio

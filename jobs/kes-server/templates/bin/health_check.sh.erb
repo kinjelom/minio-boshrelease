@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+port="<%= p('port') %>"
+url="https://127.0.0.1:${port}/v1/ready"
+http_response=$(curl -s -k -o /dev/null -I -w "%{http_code}" ${url})
+
+[ "$http_response" = "200" ]

@@ -20,3 +20,5 @@ blobs
 *#
 #*
 prv-notes.md
+manifests/vars/minio-rnd-vars-file.yml
+manifests/vars/minio-rnd-vars-store.yml

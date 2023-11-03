@@ -97,6 +97,12 @@ instance_groups:
 - [smoke-tests.yml](manifests/ops/smoke-tests.yml) - some smoke tests after cluster deploy
 - [minio-enc.yml](manifests/ops/minio-enc.yml) - TLS encryption
 
+## Server-Side Encryption of Objects
+
+The new Job [KES (MinIO Key Encryption Service)](https://min.io/docs/kes/) now [supports CredHub](https://github.com/minio/kes/pull/413) as a KeyStore.
+Here is an [example manifest](manifests/manifest-example.yml).
+
+For more information, see: [MinIO Server-Side Encryption](https://min.io/docs/minio/linux/administration/server-side-encryption.html)
 
 ## Estimation of Deployment
 
@@ -181,7 +187,6 @@ Other releases code:
 ## TODO:
 
 - [ ] `mc mirror` as an errand, now you can use [this errand](manifests/ops/mirroring-to-this-minio-errand.yml)
-- [ ] Data at-rest encryption manifest example, now only [in-transit](manifests/ops/minio-enc.yml)
 - [ ] Migration errand, now you can use [this errand](manifests/ops/mirroring-to-this-minio-errand.yml)
    - https://min.io/docs/minio/linux/operations/install-deploy-manage/expand-minio-deployment.html
 

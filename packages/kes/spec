@@ -1,0 +1,8 @@
+---
+name: kes
+
+dependencies: [ ]
+
+files:
+  - blobs-versions.env
+  - kes-*

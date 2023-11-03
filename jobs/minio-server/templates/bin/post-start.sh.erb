@@ -2,7 +2,8 @@
 
 # TODO: These admin ops only work for deployed cluster, don't work for cluster creation!!!
 
-set -eux
+set -e
+
 MC_HOME="/var/vcap/packages/mc"
 JQ_HOME="/var/vcap/packages/jq"
 export CONFIG_DIR="/var/vcap/jobs/minio-server/config"

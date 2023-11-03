@@ -1,0 +1,13 @@
+check process kes-server
+  with pidfile /var/vcap/sys/run/kes-server/pid
+  start program "/var/vcap/jobs/kes-server/bin/ctl start"
+  stop program "/var/vcap/jobs/kes-server/bin/ctl stop"
+  group vcap
+#  if failed
+#    host localhost
+#    port <%=p('port') %>
+#    protocol https
+#    request "/v1/ready"
+#  then restart
+
+# monit 5.2.5 https://gist.github.com/oppegard/46dfa1e40b46aff1fa73c81b10341cab
