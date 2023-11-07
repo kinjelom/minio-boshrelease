@@ -15,10 +15,13 @@ instance_groups:
         release: minio
         provides:
           minio-server: { as: minio-link }
+        consumes:
+          kes-tls-config: {from: kes-link}
         properties:
           credential:
             root_user: ((minio_root_user))
             root_password: ((minio_root_password))
+          apply_provided_local_kes_config: true
           server_config:
             # console
             MINIO_BROWSER_REDIRECT_URL: "https://((minio_console_uri))"
@@ -28,16 +31,10 @@ instance_groups:
             MINIO_PROMETHEUS_JOB_ID: "((deployment_name))"
             # storage-class https://min.io/docs/minio/linux/reference/minio-server/minio-server.html#storage-class
             MINIO_STORAGE_CLASS_STANDARD: "((minio_storage_class_standard))"
-            # KMS
-            MINIO_KMS_KES_ENDPOINT: https://localhost:7373
-            MINIO_KMS_KES_CAPATH: /var/vcap/jobs/kes-server/config/certs/kes-server/kes-server-ca.crt
-            MINIO_KMS_KES_KEY_FILE: /var/vcap/jobs/kes-server/config/certs/kes-clients/client-admin.key
-            MINIO_KMS_KES_CERT_FILE: /var/vcap/jobs/kes-server/config/certs/kes-clients/client-admin.crt
-            MINIO_KMS_KES_KEY_NAME: ((deployment_name))-kms-default-key
       - name: kes-server
         release: minio
         provides:
-          kes-server: { as: kes-link }
+          kes-tls-config: {as: kes-link}
         properties:
           tls:
             certs:

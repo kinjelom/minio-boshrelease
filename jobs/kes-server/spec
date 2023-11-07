@@ -19,12 +19,13 @@ packages:
   - kes
 
 provides:
-  - name: kes-server
+  - name: kes-tls-config
     type: kes-tls-config
     properties:
       - port
-      - tls.certs.kes_client_admin
       - tls.certs.kes_server.ca
+      - tls.certs.kes_client_admin.certificate
+      - tls.certs.kes_client_admin.private_key
 
 properties:
   address:

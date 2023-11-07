@@ -10,6 +10,9 @@ templates:
   config/certs/CAs/ca.crt.erb: config/certs/CAs/ca.crt
   config/certs/public.crt.erb: config/certs/public.crt
   config/certs/private.key.erb: config/certs/private.key
+  config/certs/kes/kes-server-ca.crt.erb: config/certs/kes/kes-server-ca.crt
+  config/certs/kes/kes-client-admin.crt.erb: config/certs/kes/kes-client-admin.crt
+  config/certs/kes/kes-client-admin.key.erb: config/certs/kes/kes-client-admin.key
   dns/aliases.json.erb: dns/aliases.json
 
 packages:
@@ -20,6 +23,13 @@ packages:
 consumes:
   - name: minio-server
     type: server
+  - name: kes-tls-config
+    type: kes-tls-config
+    properties:
+      - port
+      - tls.certs.kes_server.ca
+      - tls.certs.kes_client_admin.certificate
+      - tls.certs.kes_client_admin.private_key
 
 provides:
   - name: minio-server
@@ -49,6 +59,9 @@ properties:
   credential.root_password:
     description: "The secret key for the root user. The secret key length should be at least 8 characters"
     default: ~
+  apply_provided_local_kes_config:
+    description: "If true, MINIO_KMS_KES_ENDPOINT, MINIO_KMS_KES_CAPATH, MINIO_KMS_KES_KEY_FILE, and MINIO_KMS_KES_CERT_FILE will be set using the properties provided by the KES server and the localhost address. These can still be overridden by explicit server_config settings."
+    default: false
   server_config:
     description: "Config entries the MinIO server process uses for loading environment variables: https://min.io/docs/minio/linux/reference/minio-server/minio-server.html"
     example:

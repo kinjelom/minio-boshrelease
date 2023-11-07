@@ -19,8 +19,8 @@ down_add_blob() {
 }
 
 down_add_blob "minio-${MINIO_VERSION}" "https://dl.minio.io/server/minio/release/linux-amd64/archive/minio.RELEASE.${MINIO_VERSION}"
-down_add_blob "kes-${KES_VERSION}" "https://github.com/kinjelom/kes/releases/download/${KES_VERSION}/kes-${KES_VERSION}-linux-amd64"
 down_add_blob "mc-${MC_VERSION}" "https://dl.minio.io/client/mc/release/linux-amd64/archive/mc.RELEASE.${MC_VERSION}"
+down_add_blob "kes-${KES_VERSION}" "https://github.com/kinjelom/kes/releases/download/v${KES_VERSION}/kes-${KES_VERSION}-linux-amd64"
 down_add_blob "jq-${JQ_VERSION}" "https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64"
 
 echo "Download blobs into blobs/ based on config/blobs.yml"
