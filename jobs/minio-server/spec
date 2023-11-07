@@ -60,7 +60,7 @@ properties:
     description: "The secret key for the root user. The secret key length should be at least 8 characters"
     default: ~
   apply_provided_local_kes_config:
-    description: "If true, MINIO_KMS_KES_ENDPOINT, MINIO_KMS_KES_CAPATH, MINIO_KMS_KES_KEY_FILE, and MINIO_KMS_KES_CERT_FILE will be set using the properties provided by the KES server and the localhost address. These can still be overridden by explicit server_config settings."
+    description: "If true, MINIO_KMS_KES_KEY_NAME, MINIO_KMS_KES_ENDPOINT, MINIO_KMS_KES_CAPATH, MINIO_KMS_KES_KEY_FILE, and MINIO_KMS_KES_CERT_FILE will be set using the properties provided by the KES server and the localhost address. These can still be overridden by explicit server_config settings."
     default: false
   server_config:
     description: "Config entries the MinIO server process uses for loading environment variables: https://min.io/docs/minio/linux/reference/minio-server/minio-server.html"

@@ -102,7 +102,7 @@ instance_groups:
 The new Job [KES (MinIO Key Encryption Service)](https://min.io/docs/kes/) now [supports CredHub](https://github.com/minio/kes/pull/413) as a KeyStore.
 Here is an [example manifest](manifests/manifest-example.yml).
 
-For more information, see: [MinIO Server-Side Encryption](https://min.io/docs/minio/linux/administration/server-side-encryption.html)
+For more information, see: [MinIO Server-Side Encryption](README-SSE.md)
 
 ## Estimation of Deployment
 
