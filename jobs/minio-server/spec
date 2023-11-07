@@ -25,6 +25,7 @@ consumes:
     type: server
   - name: kes-tls-config
     type: kes-tls-config
+    optional: true
     properties:
       - port
       - tls.certs.kes_server.ca

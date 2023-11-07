@@ -17,4 +17,6 @@ builds:
     version: 2.2.0+minio.2023-11-01T18-37-25Z
   7bb05fa4-0d49-4af7-68cb-c11d6d6817df:
     version: 2.1.2+minio.2023-07-21T21-12-44Z
+  bdf53d4b-d750-4fdb-6c2c-bdea3b655c21:
+    version: 2.3.1+minio.2023-11-01T18-37-25Z
 format-version: "2"
