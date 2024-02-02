@@ -106,64 +106,9 @@ For more information, see: [MinIO Server-Side Encryption](README-SSE.md)
 
 ## Estimation of Deployment
 
-Read first:
 - https://min.io/product/reference-hardware
 - https://min.io/product/erasure-code-calculator
 - https://en.wikipedia.org/wiki/Erasure_code
-
-### The Read and Write Speed
-
-The read and write speed in MinIO depends on multiple factors, such as the number of nodes, the value of
-`MINIO_STORAGE_CLASS_STANDARD`, disk speed, network throughput, server performance, and system load. It is not possible
-to provide exact values, but one can present general principles that affect read and write speed in MinIO.
-
-1. Number of nodes: More nodes in the cluster can contribute to higher throughput, as data is distributed across
-   different nodes. However, too many nodes may lead to increased latency in communication between nodes.
-
-2. Value of `MINIO_STORAGE_CLASS_STANDARD`: The EC (Erasure Coding) value affects data redundancy, and consequently,
-   read
-   and write performance. The higher the EC value, the more parity parts are added to the data, which may impact write
-   speed. However, higher EC values can also improve read performance, as data can be reconstructed from multiple
-   shards.
-
-3. Disk speed: Faster disks, such as SSDs, can significantly improve read and write performance in MinIO compared to
-   slower disks, such as HDDs.
-
-4. Network throughput: A fast network with low latency between nodes can improve read and write performance, especially
-   in a distributed MinIO system.
-
-5. Server performance: Fast servers with plenty of RAM and multiple CPU cores can process requests more quickly,
-   resulting in better read and write performance.
-
-Since read and write speed depends on many factors, it is recommended to monitor the performance of the MinIO cluster
-under real conditions and adjust the configuration as needed to achieve optimal performance.
-
-### Disk Space
-
-To estimate the amount of space used in a MinIO cluster depending on the number of nodes and
-`MINIO_STORAGE_CLASS_STANDARD`, you can follow these steps:
-
-1. Determine the data and parity shards: Look at the `MINIO_STORAGE_CLASS_STANDARD` value, which is in the
-   format `EC:N`. The `N` represents the number of parity shards. The remaining shards are data shards. For example, if
-   you have a 4-node cluster and `MINIO_STORAGE_CLASS_STANDARD="EC:1"`, there are 1 parity shard and 3 data shards.
-
-2. Calculate the size of data and parity shards: Divide the size of the file by the number of data shards to get the
-   size of each data shard. The size of parity shards will be equal to the size of the data shards.
-
-3. Calculate the total space used: Multiply the size of the data shards by the number of data shards, and add the
-   product to the size of the parity shards multiplied by the number of parity shards. This will give you the total
-   space used in the MinIO cluster for the given file.
-
-Here's an example for a `4-node` cluster and `MINIO_STORAGE_CLASS_STANDARD="EC:1"`. You want to store a `1 GB` file:
-
-1. Data and parity shards: There are `1` parity shard (`EC:1`) and 3 data shards (`4 nodes - 1`).
-2. Size of data and parity shards: Divide `1 GB` by `3` data shards, which results in approximately `0.333 GB`
-   per data shard. The parity shard size is also `0.333 GB`.
-3. Total space used: `(0.333 GB * 3 data shards) + (0.333 GB * 1 parity shard) = 1.333 GB`
-   In this example, a `1 GB` file would take up `1.333 GB` of space in the MinIO cluster.
-
-Keep in mind that this is a simplified estimation and actual space usage might vary due to factors such as metadata
-overhead, file fragmentation, and cluster configuration.
 
 ## Previous Releases
 
