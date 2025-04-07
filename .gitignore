@@ -13,6 +13,7 @@ blobs
 .DS_Store
 .final_builds/jobs/**/*.tgz
 .final_builds/packages/**/*.tgz
+.local
 .downloads
 .temp
 *.swp

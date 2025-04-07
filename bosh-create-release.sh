@@ -28,7 +28,7 @@ echo "  sha1: \"$SHA1\""
 echo '```'
 echo 'Or upload it to your director with the `upload-release` command:'
 echo '```'
-echo "bosh upload-release --sha1 $SHA1 \ "
+echo "bosh upload-release --sha1 $SHA1 \\"
 echo "  $TARBALL_URL"
 echo '```'
 echo " "

@@ -1,9 +1,0 @@
-#!/bin/bash
-
-set -e
-
-CONFIG_DIR="/var/vcap/jobs/kes-server/config"
-KES_CTL="/var/vcap/packages/kes/kes"
-
-KES_ADMIN_ID=$(${KES_CTL} identity of "$CONFIG_DIR/certs/kes-clients/client-admin.crt" | tail -n 1 | xargs)
-sed -i "s/ADMIN_IDENTITY_PLACEHOLDER/${KES_ADMIN_ID}/g" "$CONFIG_DIR/server-config.yaml"

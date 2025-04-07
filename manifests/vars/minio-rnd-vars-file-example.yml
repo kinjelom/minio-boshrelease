@@ -8,16 +8,3 @@ minio_root_password: "If-you-really-love-security-then-you-will-change-me!"
 
 minio_console_uri: minio-console-rnd.example.org
 minio_api_uri: minio-api-rnd.example.org
-
-credhub_base_url: https://credhub-dev.example.org:8844
-credhub_server_ca:
-  certificate: |
-    -----BEGIN CERTIFICATE-----
-    -----END CERTIFICATE-----
-credhub_client:
-  certificate: |
-    -----BEGIN CERTIFICATE-----
-    -----END CERTIFICATE-----
-  private_key: |
-    -----BEGIN PRIVATE KEY-----
-    -----END PRIVATE KEY-----
