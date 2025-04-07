@@ -1,7 +1,0 @@
-set -e
-
-source blobs-versions.env
-
-cp -a kes-${KES_VERSION} ${BOSH_INSTALL_TARGET}/kes
-chmod +x ${BOSH_INSTALL_TARGET}/kes
-

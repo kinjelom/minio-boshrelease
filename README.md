@@ -99,10 +99,14 @@ instance_groups:
 
 ## Server-Side Encryption of Objects
 
-The new Job [KES (MinIO Key Encryption Service)](https://min.io/docs/kes/) now [supports CredHub](https://github.com/minio/kes/pull/413) as a KeyStore.
-Here is an [example manifest](manifests/manifest-example.yml).
+Ths deployment supports encrypting IAM with a single key only. 
+You can set the env. variable `MINIO_KMS_SECRET_KEY`, it expects the following format:
 
-For more information, see: [MinIO Server-Side Encryption](README-SSE.md)
+```bash
+MINIO_KMS_SECRET_KEY=<key-name>:<base64-value>
+```
+
+For more details refer to [MinIO KMS Quick Start](https://github.com/minio/minio/blob/master/docs/kms/IAM.md#minio-kms-quick-start).
 
 ## Estimation of Deployment
 
@@ -128,20 +132,3 @@ Other releases code:
 - This repository was recovered up to the `RELEASE.2022-02-17T23-22-26Z`
 - Changes up to the [RELEASE.2022-11-11T03-44-20Z are available here](https://github.com/kinjelom/minio-boshrelease/pull/1).
 
-
-## TODO:
-
-- [ ] `mc mirror` as an errand, now you can use [this errand](manifests/ops/mirroring-to-this-minio-errand.yml)
-- [ ] Migration errand, now you can use [this errand](manifests/ops/mirroring-to-this-minio-errand.yml)
-   - https://min.io/docs/minio/linux/operations/install-deploy-manage/expand-minio-deployment.html
-
-## To Consider:
-
-- [ ] Multiple disks support, does anyone need it?
-   - https://www.starkandwayne.com/blog/bosh-multiple-disks/
-   - https://github.com/BeckerMax/multidisk-bosh-release
-- [ ] Loadbalancing, does anyone need it?
-   - https://min.io/docs/minio/linux/operations/install-deploy-manage/expand-minio-deployment.html#networking-and-firewalls
-- [ ] self-healing, does anyone need it?
-   - https://min.io/docs/minio/linux/reference/minio-mc-admin/mc-admin-heal.html
-   - `mc admin heal CLUSTER/bucket --scan deep --recursive --rewrite`
