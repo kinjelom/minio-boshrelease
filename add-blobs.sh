@@ -4,6 +4,7 @@ set -eux
 
 source ./src/blobs-versions.env
 source ./rel.env
+unset BOSH_ALL_PROXY
 
 mkdir -p "$TMP_DIR"
 
@@ -22,9 +23,9 @@ down_add_blob "minio-${MINIO_VERSION}" "https://dl.minio.io/server/minio/release
 down_add_blob "mc-${MC_VERSION}" "https://dl.minio.io/client/mc/release/linux-amd64/archive/mc.RELEASE.${MC_VERSION}"
 down_add_blob "jq-${JQ_VERSION}" "https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64"
 
-echo "Download blobs into blobs/ based on config/blobs.yml"
-bosh sync-blobs
-
 echo "Upload previously added blobs that were not yet uploaded to the blobstore. Updates config/blobs.yml with returned blobstore IDs."
 bosh upload-blobs
+
+echo "Download blobs into blobs/ based on config/blobs.yml"
+bosh sync-blobs
 

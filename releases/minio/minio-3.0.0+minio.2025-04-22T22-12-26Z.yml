@@ -1,0 +1,47 @@
+name: minio
+version: 3.0.0+minio.2025-04-22T22-12-26Z
+commit_hash: 581e423
+uncommitted_changes: false
+jobs:
+- name: mc
+  version: ff76179b15f068b7efc2f713d2e43eabfa93515567efd6d784d223d0efa8f92f
+  fingerprint: ff76179b15f068b7efc2f713d2e43eabfa93515567efd6d784d223d0efa8f92f
+  sha1: sha256:e87d946295d749c250be1712e73a790f78c3396617e021a559a805e687ec1e70
+  packages:
+  - mc
+  - jq
+- name: minio-server
+  version: 69c5b2844d41b538f4f32bdcf758075cad1623d28d3b88d764f7b27ae3b5be2d
+  fingerprint: 69c5b2844d41b538f4f32bdcf758075cad1623d28d3b88d764f7b27ae3b5be2d
+  sha1: sha256:25f20a3590292a44a26aadfe57c0a04ce6caa92f61fea3bfc847c0912ac2d811
+  packages:
+  - minio
+  - mc
+  - jq
+- name: smoke-tests
+  version: b85ae971e42af018bb4f87c91ea039e44bfacfddeb79a8e19be36d43a987b9bf
+  fingerprint: b85ae971e42af018bb4f87c91ea039e44bfacfddeb79a8e19be36d43a987b9bf
+  sha1: sha256:2158d33498100f8b77cae4a4980b4653a8e855ea090a740fee5b59e2f5480ece
+  packages:
+  - mc
+  - jq
+packages:
+- name: jq
+  version: 9d95803520fa09efa01a5112ad1c4220a07b29ac1838a702ca101be1c79e1206
+  fingerprint: 9d95803520fa09efa01a5112ad1c4220a07b29ac1838a702ca101be1c79e1206
+  sha1: sha256:58907d9966dba902133cc2800c01bc9b102d4bef11c4d02e74c189c499130ddb
+  dependencies: []
+- name: mc
+  version: cfac68a10a8987a921f692d709f5644ce9d56f3a03333b5efb29ad6c365d8af1
+  fingerprint: cfac68a10a8987a921f692d709f5644ce9d56f3a03333b5efb29ad6c365d8af1
+  sha1: sha256:d7887ffbd38122d567f135380931a4273d6a1c71a4c31d9a14dde232e40d3593
+  dependencies: []
+- name: minio
+  version: 93d9adbcfbb49d4fc180b8289c6e5379f51c42b42f06428db093afe7b47d0702
+  fingerprint: 93d9adbcfbb49d4fc180b8289c6e5379f51c42b42f06428db093afe7b47d0702
+  sha1: sha256:c530059d75050e811d023fe719a9cda3e57742cc9300003e91b4c02b87e40443
+  dependencies: []
+license:
+  version: e63fc8ed4afc4e74f5a8a7feba0a1b806655e5318413c4e0afa9f61c79b7abd6
+  fingerprint: e63fc8ed4afc4e74f5a8a7feba0a1b806655e5318413c4e0afa9f61c79b7abd6
+  sha1: sha256:e80c1f0610bc7ea7978653aa43983b88d2086b7eb61a1cafde1e0584e3c1b2d2
